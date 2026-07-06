@@ -1,0 +1,129 @@
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    font-family: 'Courier New', Courier, monospace;
+}
+
+:root {
+    --highlight: yellow;
+    --highlightB: rgba(255, 255, 0, 0.218);
+    --bg: white;
+    --color: black;
+    --border: black;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: black;
+        --color: white;
+        --border: white;
+    }
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--color);
+
+    
+}
+
+p {
+    width: fit-content;
+    &:hover {
+        background-color: var(--highlight);
+        color: black;
+        font-weight: 700;
+
+        &::before {
+            content: ">\20";
+        }
+        &.button::after {
+            content: "\20<";
+        }
+    }
+}
+
+nav {
+    display: grid;
+    grid-template-columns: 200px auto 200px;
+    grid-template-areas: "left middle right";
+    gap: 10px;
+
+    padding-left: 10px;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+
+    border-bottom: 3px solid var(--border);
+
+    & div {
+        & div {
+            align-items: center;
+            display: flex;
+        }
+        &.left {
+            grid-area: "left";
+        }
+        &.middle {
+            grid-area: "middle";
+            justify-content: center;
+        }
+        &.right {
+            grid-area: "right"
+        }
+    }
+}
+
+main {
+    display: grid;
+    grid-template-columns: 200px auto auto;
+    grid-template-areas: "left middle right";
+    gap: 10px;
+
+    position: fixed;
+    top: 53px;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+
+    & div{
+        width: 100%;
+        height: 100%;
+
+        padding-left: 10px;
+
+        &:hover {
+            background-color: var(--highlightB);
+            transition-duration: 0.2s;
+        }
+
+        &.left {
+            grid-area: "left";
+        }
+        &.middle {
+            grid-area: "middle";
+        }
+        &.right {
+            grid-area: "right"
+        }
+    }
+}
+
+footer {
+    display: flex;
+    gap: 50px;
+
+    padding-left: 10px;
+
+    position: fixed;
+    height: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

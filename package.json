@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch server.js"
+    "dev": "nodemon server.js",
+    "watch": "node --watch index.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,9 @@
   },
   "homepage": "https://github.com/nathaniel-atkinson/intelscreening#readme",
   "dependencies": {
+    "connect-livereload": "^0.6.1",
     "express": "^5.2.1",
+    "livereload": "^0.10.3",
     "nodemon": "^3.1.14",
     "sqlite": "^5.1.1"
   }

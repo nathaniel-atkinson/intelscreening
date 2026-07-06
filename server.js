@@ -1,16 +1,25 @@
-const express = require(express);
-const path = require(path);
-const fs = require(fs);
-const sqlite = require(sqlite);
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const sqlite = require('sqlite');
 
 const app = express();
-const port = 3525;
+const PORT = 3525;
+
+const livereload = require("livereload");
+const connectLiveReload = require("connect-livereload");
+
+const lrserver = livereload.createServer();
+lrserver.watch(path.join(__dirname, "public"));
+
+app.use(connectLiveReload());
 
 app.use(express.static("public"));
 
 app.get('/', (req,res) => {
-    res.sendFile(path.join(__dirname, "public", "home"));
+    res.sendFile(path.join(__dirname, "public", "home", "index.html"));
 })
+
 app.get('/home', (req,res) => {res.redirect('/');})
 
 app.get('/:page', (req,res) => {
@@ -22,7 +31,11 @@ app.get('/:page', (req,res) => {
     );
 
     res.sendFile(file, (err) => {
-        res.redirect(path.join(__dirname, "public", "404.html"))
+        if (err) {
+            res.status(404).sendFile(
+                path.join(__dirname, "public", "404.html")
+        );
+    }
     })
 })
 
