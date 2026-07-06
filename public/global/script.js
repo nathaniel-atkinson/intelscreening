@@ -1,7 +1,7 @@
 const body = document.querySelector("body");
 const nav = document.querySelector("nav");
 
-const tabsContainer = document.querySelector("div.tabsContainer");
+const tabsContainer = document.querySelector(".tabsContainer");
 
 const main_right = document.querySelector("main .right");
 const main_left = document.querySelector("main .left");

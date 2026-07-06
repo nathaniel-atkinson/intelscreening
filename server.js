@@ -32,7 +32,12 @@ app.get("/:page", (req, res) => {
 });
 
 app.get('/:page/script', (req,res) => {
-    const file = path.join(__dirname, "public", "pages", req.params.page, "script.js");
+    const file = path.join(
+        __dirname,
+        "public",
+        "pages",
+        req.params.page,
+        "script.js");
 
     res.sendFile(file, err => {
         if (err) {
@@ -42,7 +47,12 @@ app.get('/:page/script', (req,res) => {
 });
 
 app.get('/:page/style', (req,res) => {
-    const file = path.join(__dirname, "public", "pages", req.params.page, "styles.css");
+    const file = path.join(
+        __dirname,
+        "public",
+        "pages",
+        req.params.page,
+        "styles.css");
 
     res.sendFile(file, err => {
         if (err) {
@@ -68,10 +78,21 @@ app.get("/:page/data", (req,res) => {
 });
 
 //---GLOBAL RESOURCES---
-app.get('/g/script', (req,res) => {
-    res.sendFile(path.join(__dirname, "public", "global", "script.js"))
-})
-app.get('/g/styles', (req,res) => {
+app.get('/g/script', (req, res) => {
+    const file = path.join(__dirname, "public", "global", "script.js");
+
+    console.log(file);
+    console.log(fs.existsSync(file));
+
+    res.sendFile(file, err => {
+        if (err) {
+            console.error(err);
+            res.status(404).send(err.message);
+        }
+    });
+});
+
+app.get('/g/style', (req,res) => {
     res.sendFile(path.join(__dirname, "public", "global", "styles.css"))
 })
 
