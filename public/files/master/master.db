@@ -1,0 +1,12 @@
+{
+    "data": [
+        {
+            "name": "countries",
+            "route": "/files/countries/intel.db"
+        },
+        {
+            "name": "geography",
+            "route": "/files/geography/intel.db"
+        }
+    ]
+}

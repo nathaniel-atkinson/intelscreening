@@ -1,0 +1,22 @@
+{
+  "name": "intelscreening",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "nathaniel",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "watch": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

@@ -1,0 +1,103 @@
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 50px auto;
+    grid-template-areas: "nav", "main";
+}
+
+nav {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 50px;
+    border-bottom: 3px solid black;
+
+    display: grid;
+    grid-template-columns: 100px auto 100px;
+
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    & span {
+        grid-column: 1;
+        justify-self: start;
+    }
+    & .tabsContainer {
+        grid-column: 2;
+        display: flex;
+        gap: 10px;
+   }
+    & div:not(.tabsContainer) {
+        grid-column: 3;
+    }
+}
+
+main {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas: "left right";
+
+    & .left, .right {
+        &:hover {
+            background-color: #ffff0023;
+        }
+    }
+
+    & .left {
+        grid-area:"left";
+    }
+
+    & .right {
+        grid-area:"right";
+    }
+}
+
+& tr:hover {
+    background-color: yellow;
+}
+
+input[type="button"], .button{
+    border: 3px solid black;
+    padding: 5px 10px;
+    background-color: white;
+
+    &:hover {
+        cursor: pointer;
+        background-color: yellow;
+    }
+}
+
+.tab {
+    &:active {
+        font-weight: 700;
+    }
+}
+
+header {
+    position: fixed;
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    height: 50px;
+    border-bottom: 3px solid black;
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}

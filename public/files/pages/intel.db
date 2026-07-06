@@ -1,0 +1,20 @@
+{
+    "data": [
+        {
+            "name": "home",
+            "path": "/home"
+        },
+        {
+            "name": "countries",
+            "path": "/countries"
+        },
+        {
+            "name": "geography",
+            "path": "/geography"
+        },
+        {
+            "name": "master",
+            "path": "/master"
+        }
+    ]
+}

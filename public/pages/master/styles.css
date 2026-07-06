@@ -1,0 +1,22 @@
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.entry {
+    cursor: pointer;
+
+    &:hover {
+        background-color: yellow;
+
+        &::before{
+            content: "> ";
+        }
+    }
+    
+    &:active {
+        font-weight: 700;
+    }
+}
