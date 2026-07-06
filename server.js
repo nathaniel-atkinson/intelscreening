@@ -1,101 +1,36 @@
-const express = require("express");
-const path = require("path");
-const https = require('https');
-const fs = require('fs');
+const express = require(express);
+const path = require(path);
+const fs = require(fs);
+const sqlite = require(sqlite);
 
 const app = express();
-const PORT = 3000;
+const port = 3525;
 
 app.use(express.static("public"));
 
-
-//---PATHS---
 app.get('/', (req,res) => {
-    res.sendFile(path.join(__dirname, "public", "pages", "home", "index.html"));
+    res.sendFile(path.join(__dirname, "public", "home"));
 })
 app.get('/home', (req,res) => {res.redirect('/');})
 
-app.get("/:page", (req, res) => {
+app.get('/:page', (req,res) => {
     const file = path.join(
         __dirname,
         "public",
-        "pages",
         req.params.page,
         "index.html"
     );
 
-    res.sendFile(file, err => {
-        if (err) {
-            res.sendFile(path.join(__dirname, "public", "pages", "404", "index.html"));
-        }
-    });
-});
+    res.sendFile(file, (err) => {
+        res.redirect(path.join(__dirname, "public", "404.html"))
+    })
+})
 
-//--SCRIPT---[script.js]
-app.get('/api/script/:page', (req,res) => {
-    const file = path.join(
-        __dirname,
-        "public",
-        "pages",
-        req.params.page,
-        "script.js");
+app.get('/api/global/scripts', (req,res) => {
+    res.sendFile(path.join(__dirname, "public", "global", "scripts.js"))
+})
 
-    res.sendFile(file, err => {
-        if (err) {
-            res.sendFile(path.join(__dirname, "public", "pages", "404", "index.html"));
-        }
-    });
-});
-
-//--STYLES---[styles.css]
-app.get('/api/styles/:page', (req,res) => {
-    const file = path.join(
-        __dirname,
-        "public",
-        "pages",
-        req.params.page,
-        "styles.css");
-
-    res.sendFile(file, err => {
-        if (err) {
-            res.sendFile(path.join(__dirname, "public", "pages", "404", "index.html"));
-        }
-    });
-});
-
-//--DATA---[intel.db]
-app.get("/api/data/:page", (req,res) => {
-    const file = path.join(
-        __dirname,
-        "public",
-        "files",
-        req.params.page,
-        "intel.db"
-    );
-
-    res.sendFile(file, err => {
-        if (err) {
-            res.sendFile(path.join(__dirname, "public", "pages", "404", "index.html"));
-        }
-    });
-});
-
-//---GLOBAL RESOURCES---
-app.get('/api/global/script', (req, res) => {
-    const file = path.join(__dirname, "public", "global", "script.js");
-
-    console.log(file);
-    console.log(fs.existsSync(file));
-
-    res.sendFile(file, err => {
-        if (err) {
-            console.error(err);
-            res.status(404).send(err.message);
-        }
-    });
-});
-
-app.get('/api/global/style', (req,res) => {
+app.get('/api/global/styles', (req,res) => {
     res.sendFile(path.join(__dirname, "public", "global", "styles.css"))
 })
 

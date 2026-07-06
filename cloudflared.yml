@@ -1,7 +1,0 @@
-tunnel: YOUR_TUNNEL_ID
-credentials-file: ./credentials.json
-
-ingress:
-  - hostname: intel.screening.com
-    service: http://127.0.0.1:8000
-  - service: http_status:404

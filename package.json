@@ -2,21 +2,26 @@
   "name": "intelscreening",
   "version": "1.0.0",
   "description": "",
-  "license": "ISC",
-  "author": "nathaniel",
-  "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
-    "watch": "node --watch index.js"
+    "dev": "node --watch server.js"
   },
-  "dependencies": {
-    "express": "^5.2.1"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathaniel-atkinson/intelscreening.git"
   },
   "keywords": [],
-  "devDependencies": {
-    "nodemon": "^3.1.14"
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nathaniel-atkinson/intelscreening/issues"
+  },
+  "homepage": "https://github.com/nathaniel-atkinson/intelscreening#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14",
+    "sqlite": "^5.1.1"
   }
 }
