@@ -8,7 +8,7 @@ const main_left = document.querySelector("main .left");
 
 //--FETCH DATA---()
 async function fetchData() {
-    const response = await fetch("/pages/data");
+    const response = await fetch("/api/data/pages");
 
     if (!response.ok) throw new Error(`Could not fetch data:${response.status}`)
     

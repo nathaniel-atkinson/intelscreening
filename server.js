@@ -31,7 +31,8 @@ app.get("/:page", (req, res) => {
     });
 });
 
-app.get('/:page/script', (req,res) => {
+//--SCRIPT---[script.js]
+app.get('/api/script/:page', (req,res) => {
     const file = path.join(
         __dirname,
         "public",
@@ -46,7 +47,8 @@ app.get('/:page/script', (req,res) => {
     });
 });
 
-app.get('/:page/style', (req,res) => {
+//--STYLES---[styles.css]
+app.get('/api/styles/:page', (req,res) => {
     const file = path.join(
         __dirname,
         "public",
@@ -61,7 +63,8 @@ app.get('/:page/style', (req,res) => {
     });
 });
 
-app.get("/:page/data", (req,res) => {
+//--DATA---[intel.db]
+app.get("/api/data/:page", (req,res) => {
     const file = path.join(
         __dirname,
         "public",
@@ -78,7 +81,7 @@ app.get("/:page/data", (req,res) => {
 });
 
 //---GLOBAL RESOURCES---
-app.get('/g/script', (req, res) => {
+app.get('/api/global/script', (req, res) => {
     const file = path.join(__dirname, "public", "global", "script.js");
 
     console.log(file);
@@ -92,7 +95,7 @@ app.get('/g/script', (req, res) => {
     });
 });
 
-app.get('/g/style', (req,res) => {
+app.get('/api/global/style', (req,res) => {
     res.sendFile(path.join(__dirname, "public", "global", "styles.css"))
 })
 
