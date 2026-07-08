@@ -85,3 +85,15 @@ app.get('/api/global/styles', (req,res) => {
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+
+//---SQLITE--&--DATABASES
+
+const { getDatabase } = require("./database/db");
+
+app.get("/api/test", async (req, res) => {
+    const db = await getDatabase("./db/test.db");
+
+    const rows = await db.all("SELECT * FROM users");
+
+    res.json(rows);
+});

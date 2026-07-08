@@ -20,3 +20,7 @@ function createFooter() {
 }
 
 createFooter();
+
+window.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+})

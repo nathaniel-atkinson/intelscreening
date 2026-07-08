@@ -12,12 +12,13 @@ createButton.addEventListener("click", (e) => {
 
     if (!menu) {
         menu = document.createElement("div");
+        menu.classList.add("temp");
         menu.id = "createMenu";
         menu.style.position = "fixed";
         menu.style.left = `${right + 10}px`
         menu.style.top = `${top}px`
         menu.style.zIndex = 100;
-        menu.style.backgroundColor = "var(--background)";
+        menu.style.backgroundColor = "var(--bg)";
         menu.style.color = "var(--color)";
         menu.style.border = "3px solid var(--border)";
         menu.style.width = "fit-content";
@@ -31,9 +32,7 @@ createButton.addEventListener("click", (e) => {
         `;
         
         createButton.classList.add("active");
-
         body.appendChild(menu);
-
         document.querySelectorAll("#createMenu p").forEach(i => {i.classList.add("button");})
 
     } else {
