@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
-const sqlite = require('sqlite');
+const fs = require("fs/promises");
+const sqlite3 = require('sqlite3');
+const { open } = require("sqlite");
 
 const app = express();
 const PORT = 3525;
@@ -88,12 +89,4 @@ app.listen(PORT, () => {
 
 //---SQLITE--&--DATABASES
 
-const { getDatabase } = require("./database/db");
-
-app.get("/api/test", async (req, res) => {
-    const db = await getDatabase("./db/test.db");
-
-    const rows = await db.all("SELECT * FROM users");
-
-    res.json(rows);
-});
+const { getDatabase } = require("./data/directory.db");
