@@ -25,7 +25,6 @@ createFooter();
 document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     document.querySelector("#contextMenu")?.remove();
-    createContextMenu(e);
 });
 
 document.addEventListener("click", (e) => {

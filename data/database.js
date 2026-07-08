@@ -22,6 +22,39 @@ async function databaseExists() {
     }
 }
 
+let db;
+async function initializeDirectory() {
+    if (db) return db;
+
+    db = await open({
+        filename: path.join(__dirname, "directory.db"),
+        driver: sqlite3.Database
+    });
+
+    return db;
+}
+
+async function removeDirectory() {
+    if (db) {
+        await db.close();
+        db = null;
+    }
+
+    try {
+        await fs.unlink(dbPath);
+    } catch (error) {
+        if (error.code !== "ENOENT") {
+            throw error;
+        }
+    }
+}
+
+async function createDatabase() {
+    
+}
+
 module.exports = { 
-    databaseExists
+    databaseExists,
+    initializeDirectory,
+    removeDirectory
 };

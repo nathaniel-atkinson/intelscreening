@@ -1,3 +1,5 @@
+.agents/
+data/
 node_modules/
 credentials.json
 .env
