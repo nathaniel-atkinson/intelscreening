@@ -23,17 +23,24 @@
     }
 }
 
+.underlined {
+    text-decoration: underline;
+}
+
+.bold {
+    font-weight: 700;
+}
+
 body {
     background-color: var(--bg);
-    color: var(--color);
-
-    
+    color: var(--color);    
 }
 
 p {
     width: fit-content;
     &:hover {
         background-color: var(--highlight);
+        color: black;
 
         &::before {
             content: ">\20";
@@ -70,15 +77,16 @@ p {
         &::after {
             content: "\20<";
         }
-
     }
     &.active {
         background-color: yellow;
+        color: black;
         font-weight: 700;
         
         &:hover {
             background-color: var(--highlight);
             color: red;
+            border-color: red;
 
             &::before {
                 content: "X\20";
