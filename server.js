@@ -34,8 +34,42 @@ app.get('/:page', (req,res) => {
         if (err) {
             res.status(404).sendFile(
                 path.join(__dirname, "public", "404.html")
-        );
-    }
+            );
+        }
+    })
+})
+
+app.get('/api/scripts/:page', (req,res) => {
+    const file = path.join(
+        __dirname,
+        "public",
+        req.params.page,
+        "script.js"
+    )
+
+    res.sendFile(file, (err) => {
+        if (err) {
+            res.status(404).sendFile(
+                path.join(__dirname, "public", "404.html")
+            );
+        }
+    })
+})
+
+app.get('/api/styles/:page', (req,res) => {
+    const file = path.join(
+        __dirname,
+        "public",
+        req.params.page,
+        "styles.css"
+    )
+
+    res.sendFile(file, (err) => {
+        if (err) {
+            res.status(404).sendFile(
+                path.join(__dirname, "public", "404.html")
+            );
+        }
     })
 })
 

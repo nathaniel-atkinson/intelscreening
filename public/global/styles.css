@@ -34,8 +34,6 @@ p {
     width: fit-content;
     &:hover {
         background-color: var(--highlight);
-        color: black;
-        font-weight: 700;
 
         &::before {
             content: ">\20";
@@ -46,29 +44,48 @@ p {
     }
 }
 
-div.button {
+.button {
 
-    display: flex;
-    background-color: var(--bg);
-    border: 3px solid var(--border);
-    color: var(--color);
-    padding-top: 5px;
-    padding-bottom: 5px;
+    &:is(div) {
+        display: flex;
+        background-color: var(--bg);
+        border: 3px solid var(--border);
+        color: var(--color);
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
 
     &:hover {
+        font-weight: 700;
+    }
+
+    &:hover:not(.active) {
         background-color: var(--highlight);
         color: black;
-        font-weight: 700;
 
+        &::before {
+            content: ">\20";
+        }
+        &::after {
+            content: "\20<";
+        }
+
+    }
+    &.active {
+        background-color: yellow;
+        font-weight: 700;
+        
         &:hover {
-            &:hover {
-                &::before {
-                    content: ">\20";
-                }
-                &::after {
-                    content: "\20<";
-                }
+            background-color: var(--highlight);
+            color: red;
+
+            &::before {
+                content: "X\20";
             }
+            &::after {
+                content: "\20X";
+            }     
         }
     }
 
