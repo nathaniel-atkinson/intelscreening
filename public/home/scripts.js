@@ -24,7 +24,7 @@ let checked;
 async function testForDirectory() {
     if (checked) return checked;
     else {
-        const directory = await getJson('/database/testfor/directory');
+        const directory = await getJson('/api/database/status');
         checked = directory.exists
     }
 
@@ -36,7 +36,7 @@ async function testForDirectory() {
 }
 
 async function createDirectory() {
-    await getJson('/api/database/initialiseDatabase');
+    await getJson('/api/database/initialise');
 }
 
 async function getJson(url) {

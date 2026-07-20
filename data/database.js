@@ -32,7 +32,7 @@ async function initialiseDirectory() {
         driver: sqlite3.Database
     });
 
-    db.exec(`
+    await db.exec(`
         CREATE TABLE IF NOT EXISTS projects (
             id INTEGER PRIMARY KEY,
             name TEXT,
