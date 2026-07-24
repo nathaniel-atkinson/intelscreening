@@ -8,11 +8,13 @@
         <link rel='stylesheet' href="/api/global/styles">
     </head>
     <body>
-
+        <header>
+            <div class="left"></div>
+            <div class="middle"></div>
+            <div class="right"></div>
+        </header>
         <nav>
-            <div class="left">
-                <p>Assignments</p>
-            </div>
+            <div class="left"></div>
             <div class="middle"></div>
             <div class="right"></div>
         </nav>
@@ -21,12 +23,19 @@
                 <button id="test">test</button>
                 <button id="create">create</button>
             </div>
-            <div class="middle container"></div>
+            <div class="middle container">
+                <iframe title='Boggle' src='/files/boggle'></iframe>
+            </div>
             <div class="right container"></div>
         </main>
-        <footer></footer>
+        <footer>
+            <div class="left"></div>
+            <div class="middle"></div>
+            <div class="right"></div>
+        </footer>
 
         <script type="module" src="/api/global/scripts"></script>
+        <script type="module" src="/api/global/functions"></script>
         <script type="module" src="/home/scripts.js"></script>
     </body>
 </html>

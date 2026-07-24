@@ -1,0 +1,134 @@
+body {
+    display: grid;
+    grid-template-rows: 50px  50px auto 50px;
+    grid-template-areas: 
+        'header',
+        'nav',
+        'main',
+        'footer';
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    & header, nav, main, footer {
+        &:hover {
+            background-color: var(--hover1);
+        }
+    }
+
+}
+
+header {
+    grid-area: 'header';
+    display: grid;
+    grid-template-columns: 100px auto 100px;
+    grid-template-areas:
+        'header_left header_middle header_right'
+    ;
+
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+
+    & div:hover {
+        background-color: var(--hover2);
+    }
+    & div.left {
+        grid-area: 'header_left';
+    }
+    & div.middle {
+        grid-area: 'header_middle';
+
+        & iframe {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    & div.right {
+        grid-area: 'header_right';
+    }
+}
+
+nav {
+    grid-area: 'nav';
+    display: grid;
+    grid-template-columns: 100px auto 100px;
+    grid-template-areas:
+        'nav_left nav_middle nav_right'
+    ;
+
+    & div:hover {
+        background-color: var(--hover2);
+    }
+    & div.left {
+        grid-area: 'nav_left';
+    }
+    & div.middle {
+        grid-area: 'nav_middle';
+    }
+    & div.right {
+        grid-area: 'nav_right';
+    }
+}
+
+main {
+    grid-area: 'main';
+    display: grid;
+    grid-template-columns: 100px auto 100px;
+    grid-template-areas:
+        'main_left main_middle main_right'
+    ;
+
+    & div:hover {
+        background-color: var(--hover2);
+    }
+    & div.left {
+        grid-area: 'main_left';
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    & div.middle {
+        grid-area: 'main_middle';
+
+        & iframe {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    & div.right {
+        grid-area: 'main_right';
+    }
+}
+
+footer {
+    grid-area: 'footer';
+    display: grid;
+    grid-template-columns: 100px auto 100px;
+    grid-template-areas:
+        'footer_left footer_middle footer_right'
+    ;
+
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+
+    & div:hover {
+        background-color: var(--hover2);
+    }
+    & div.left {
+        grid-area: 'footer_left';
+    }
+    & div.middle {
+        grid-area: 'footer_middle';
+
+        & iframe {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    & div.right {
+        grid-area: 'footer_right';
+    }
+}

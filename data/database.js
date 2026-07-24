@@ -8,6 +8,7 @@ const dbPath = path.join(__dirname, "directory.db");
 const databasesDir = path.join(__dirname, "databases");
 const filesDir = path.join(__dirname, "files");
 
+
 let db;
 
 
@@ -43,8 +44,24 @@ async function initialiseDirectory() {
     return db;
 }
 
+async function deleteDirectory() {
+    console.log("deleteDirectory() called");
+
+    if (db) {
+        console.log("Closing database");
+        await db.close();
+        db = null;
+    }
+
+    console.log("Deleting", dbPath);
+
+    await fs.unlink(dbPath);
+
+    console.log("Database deleted");
+}
 
 module.exports = {
     directoryExists,
-    initialiseDirectory
+    initialiseDirectory,
+    deleteDirectory
 }
