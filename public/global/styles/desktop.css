@@ -12,11 +12,13 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
+    
+    color: var(--color);
+    background-color: var(--bg);
 
     & header, nav, main, footer {
-        &:hover {
-            background-color: var(--hover1);
-        }
+        padding: 10px;
+        gap: 10px;
     }
 
 }
@@ -32,9 +34,6 @@ header {
     border-radius: 10px 10px 0 0;
     overflow: hidden;
 
-    & div:hover {
-        background-color: var(--hover2);
-    }
     & div.left {
         grid-area: 'header_left';
     }
@@ -59,9 +58,6 @@ nav {
         'nav_left nav_middle nav_right'
     ;
 
-    & div:hover {
-        background-color: var(--hover2);
-    }
     & div.left {
         grid-area: 'nav_left';
     }
@@ -76,14 +72,11 @@ nav {
 main {
     grid-area: 'main';
     display: grid;
-    grid-template-columns: 100px auto 100px;
+    grid-template-columns: 100px 1fr 1fr;
     grid-template-areas:
         'main_left main_middle main_right'
     ;
 
-    & div:hover {
-        background-color: var(--hover2);
-    }
     & div.left {
         grid-area: 'main_left';
         display: flex;
@@ -92,6 +85,7 @@ main {
     }
     & div.middle {
         grid-area: 'main_middle';
+        padding: 15px;
 
         & iframe {
             width: 100%;
@@ -100,8 +94,10 @@ main {
     }
     & div.right {
         grid-area: 'main_right';
+        overflow-y: auto;
     }
 }
+
 
 footer {
     grid-area: 'footer';
@@ -114,9 +110,6 @@ footer {
     border-radius: 0 0 10px 10px;
     overflow: hidden;
 
-    & div:hover {
-        background-color: var(--hover2);
-    }
     & div.left {
         grid-area: 'footer_left';
     }

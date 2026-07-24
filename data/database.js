@@ -26,38 +26,47 @@ async function directoryExists() {
 }
 
 async function initialiseDirectory() {
+    console.log("initialiseDirectory() called");
     if (db) return db;
+    try {
+        db = await open({
+            filename: dbPath,
+            driver: sqlite3.Database
+        });
 
-    db = await open({
-        filename: dbPath,
-        driver: sqlite3.Database
-    });
-
-    await db.exec(`
-        CREATE TABLE IF NOT EXISTS projects (
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    `)
-
-    return db;
+        await db.exec(`
+            CREATE TABLE IF NOT EXISTS projects (
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        `)
+        return true;
+    } catch {
+        return false;
+    }
+    
 }
 
 async function deleteDirectory() {
     console.log("deleteDirectory() called");
 
-    if (db) {
-        console.log("Closing database");
-        await db.close();
-        db = null;
+    try {
+        if (db) {
+            console.log("Closing database");
+            await db.close();
+            db = null;
+        }
+
+        console.log("Deleting", dbPath);
+
+        await fs.unlink(dbPath);
+
+        console.log("Database deleted");
+        return true;
+    } catch {
+        return false;
     }
-
-    console.log("Deleting", dbPath);
-
-    await fs.unlink(dbPath);
-
-    console.log("Database deleted");
 }
 
 module.exports = {

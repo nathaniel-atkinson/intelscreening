@@ -34,12 +34,13 @@ app.post('/api/database/status', async (req,res) => {
 app.post('/api/database/initialise', async (req,res) => {
     console.log("POST /api/database/initialise");
     try {
-        const db = await database.initialiseDirectory();
-        if (db) res.json({create: true});
+        const status = await database.initialiseDirectory();
+        res.json({status});
     } catch (err) {
         console.error(err);
 
         res.status(500).json({
+            status,
             error: err.message
         });
     }
@@ -48,8 +49,8 @@ app.post('/api/database/initialise', async (req,res) => {
 app.post('/api/database/delete', async (req,res) => {
     console.log("POST /api/database/delete");
     try {
-        const db = await database.deleteDirectory();
-        if (!db) res.json({deleted: true});
+        const status = await database.deleteDirectory();
+        res.json({status});
     } catch (err) {
         console.error(err);
 
@@ -58,6 +59,10 @@ app.post('/api/database/delete', async (req,res) => {
         });
     }
 })
+
+//---FAVICON---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+app.use('/api/favicon', express.static(path.join(__dirname, 'public', 'Files', 'favicon')));
 
 //---MAIN---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -75,47 +80,8 @@ app.get('/', (req,res) => {
     })
 })
 
-app.get('/api/global/scripts', (req,res) => {
-    res.sendFile(path.join(
-        __dirname, 'public', 'global', 'scripts.js'
-    ))
-})
+app.get('/home', (req,res) => res.redirect(301, '/'))
 
-app.get('/api/global/functions', (req,res) => {
-    res.sendFile(path.join(
-        __dirname, 'public', 'global', 'functions.js'
-    ))
-})
-
-app.get('/api/global/styles', (req,res) => {
-    res.sendFile(path.join(
-        __dirname, 'public', 'global', 'styles.css'
-    ))
-})
-
-app.get('/api/global/styles/desktop', (req,res) => {
-    res.sendFile(path.join(
-        __dirname, 'public', 'global', 'desktop.css'
-    ))
-})
-
-app.get('/api/global/styles/mobile', (req,res) => {
-    res.sendFile(path.join(
-        __dirname, 'public', 'global', 'mobile.css'
-    ))
-})
-
-
-//---PUBLIC FILES---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-app.get('/files/boggle', (req,res) => {
-    const file = path.join(__dirname, 'public', 'files', 'Boggle.md');
-    res.sendFile(file, (err) => {
-        res.status(404).sendFile(
-            path.join(__dirname, "public", "404.html")
-        )
-    })
-})
 
 app.get('/:page/scripts.js', (req, res) => {
     const file = path.join(__dirname, 'public', req.params.page, 'scripts.js');
@@ -126,6 +92,16 @@ app.get('/:page/styles.css', (req, res) => {
     const file = path.join(__dirname, 'public', req.params.page, 'styles.css');
     if (file) res.sendFile(file);
 });
+
+//---GLOBAL---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+app.use('/global', express.static(path.join(__dirname, 'public', 'global')));
+
+//---PUBLIC FILES---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+
+
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
