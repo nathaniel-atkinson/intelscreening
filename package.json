@@ -2,31 +2,27 @@
   "name": "intelscreening",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
-    "watch": "node --watch server.js"
+  "homepage": "https://github.com/nathaniel-atkinson/intel-screening#readme",
+  "bugs": {
+    "url": "https://github.com/nathaniel-atkinson/intel-screening/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nathaniel-atkinson/intelscreening.git"
+    "url": "git+https://github.com/nathaniel-atkinson/intel-screening.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
+  "author": "nathaniel",
   "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/nathaniel-atkinson/intelscreening/issues"
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/nathaniel-atkinson/intelscreening#readme",
   "dependencies": {
-    "connect-livereload": "^0.6.1",
+    "@angular/core": "^22.1.0",
     "express": "^5.2.1",
     "livereload": "^0.10.3",
-    "nodemon": "^3.1.14",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^6.0.1"
+    "mysql": "^2.18.1",
+    "node.js": "^0.0.1-security",
+    "typescript": "^7.0.2"
   }
 }

@@ -1,8 +1,1 @@
-.agents/
-data/secure/
-node_modules/
-credentials.json
-.env
-.vscode/
-.DS_Store
-npm-debug.log*
+/node_modules
