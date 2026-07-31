@@ -24,4 +24,35 @@ function adjustHeader() {
     }
 }
 
-export const functions = { adjustHeader };
+//---Helper Functions---::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+const isMobile = () => Mobi|iPHone|iPad|android/i.test(navigator.userAgent);
+
+const checkFor = (e) => document.querySelector(e) ? true : false;
+
+//---::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+let hasCreateMenu;
+let hasDeleteMenu;
+
+body.addEventListener('click', (e) => {
+    document.querySelectorAll('.temp').forEach(i => {
+        if (!i===e.target) {
+            console.log('Removing:', i);
+            i.remove();
+            hasCreateMenu = null;
+            hasDeleteMenu = null;
+        }
+    })
+})
+
+export let lets = {
+    hasCreateMenu,
+    hasDeleteMenu
+}
+export const functions = {
+    adjustHeader,
+    isMobile,
+    checkFor
+};

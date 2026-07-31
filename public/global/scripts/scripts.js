@@ -1,3 +1,5 @@
+console.log("global.js loaded");
+
 const body = document.querySelector('body');
 const header = document.querySelector('header');
 const nav = document.querySelector('nav');
@@ -7,7 +9,7 @@ const main = document.querySelector('main');
         const frame = main_m?.querySelector('iframe');
     const main_r = main?.querySelector('.right');
 const footer = document.querySelector('footer');
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('button.main');
 
 export const globalConsts = {
     body,
@@ -22,12 +24,15 @@ export const globalConsts = {
     buttons
 }
 
-
 let hoverOn;
 
 body.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' & e.ctrlKey) {
-        event.preventDefault(); // Optional
+        e.preventDefault(); // Optional
         myFunction();
     }
+})
+
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
 })

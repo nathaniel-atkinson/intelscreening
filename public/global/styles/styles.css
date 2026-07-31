@@ -1,5 +1,7 @@
 @import '/global/styles/mobile.css' screen and (max-width: 768px);
-@import '/global/styles/desktop.css' screen and (min-width: 768px);
+@import '/global/styles/desktop.css' screen and (min-width: 769px);
+@import '/global/styles/classEngine.css';
+@import '/global/styles/modal.css';
 
 * {
     -webkit-user-select: none;
@@ -37,6 +39,8 @@ button {
     background-color: transparent;
     color: var(--color);
     text-decoration: underline;
+    width: 100%;
+    text-align: start;
 
     &:hover {
         font-weight: 700;
@@ -53,6 +57,8 @@ button {
 
 #clock {
     text-align: center;
+    font-weight: 700;
+    text-decoration: overline underline 3px;
 }
 
 

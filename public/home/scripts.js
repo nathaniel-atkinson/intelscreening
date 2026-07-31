@@ -1,5 +1,7 @@
 console.log("scripts.js loaded");
-import { globalConsts } from "/global/scripts/scripts.js";
+import { globalConsts } from '/global/scripts/scripts.js';
+import { calendar } from '/global/scripts/clock.js';
+import { functions, lets } from '/global/scripts/functions.js';
 
 const {
     body,
@@ -14,28 +16,150 @@ const {
     buttons
 } = globalConsts;
 
-import { functions } from '/global/scripts/functions.js';
+const {
+    adjustHeader,
+    isMobile,
+    checkFor
+} = functions;
+
+let {
+    hasDeleteMenu,
+    hasCreateMenu
+} = lets;
 
 const {
-    adjustHeader
-} = functions;
+    updateClock,
+    getDate,
+    getTime,
+    getFullDate
+} = calendar;
 
 window.addEventListener("DOMContentLoaded", () => {
     adjustHeader();
 });
 
 buttons.forEach(b => {
-    console.log("Attaching listener:", b);
+    console.log('Attaching listener:', `<button id='${b.id}'/>`);
 
 
-    b.addEventListener('click', async () => {
+    b.addEventListener('click', async (e) => {
+        e.stopPropagation();
+
         let data;
+
         let prop = b.id;
-        if (b.id === 'test') data = await testForDirectory();
-        if (b.id === 'create' || b.id === 'delete') data = await toggleDatabase(b);
-        console.log('.STATUS:', data);
+
+        if (b.id === 'test') data = await constructTestMenu(b);
+        if (b.id === 'create') data = await constructCreateMenu(b);
+        if (b.id === 'delete') data = await constructDeleteMenu(b);
+  
+        console.log (b.id,'.STATUS:', data);
     })
 })
+
+async function constructTestMenu(b) {
+    const testMenu = document.createElement('div');
+    testMenu.innHTML = `
+    `;
+}
+
+let createMenu;
+async function constructCreateMenu(b) {
+    console.log(`constructCreateMenu(${b.id}).clicked`)
+    if (!hasCreateMenu) {
+        hasCreateMenu = true;
+        createMenu = document.createElement('div');
+        createMenu.id = 'createMenu';
+        createMenu.classList.add('temp');
+        const buttons = ['SQL', 'file','folder'];
+
+        buttons.forEach(type => {
+            var button = document.createElement('button');
+            button.id = type;
+            button.textContent = type;
+
+            button.style.textIndent = '0.25in';
+
+            button.addEventListener('click', () => {
+                const test = (id) => button.id === id ? true : false;
+                if (test('SQL')) createDirectory(b);
+                if (test('file')) createFileField();
+            })
+
+            createMenu.appendChild(button);
+        })
+        
+        b.after(createMenu);
+        if (checkFor('createMenu')) console.log(`checkFor('createMenu').STATUS =`, true);
+        return true;
+    } else {
+        createMenu.remove();
+        hasCreateMenu = null;
+        return false;
+    }
+}
+
+let deleteMenu;
+async function constructDeleteMenu(b) {
+    
+    if (!hasDeleteMenu) {
+        hasDeleteMenu = true;
+        deleteMenu = document.createElement('div');
+        deleteMenu.classList.add('temp');
+        const buttons = ['SQL', 'file','folder'];
+
+        buttons.forEach(type => {
+            var button = document.createElement('button');
+            button.id = type;
+            button.textContent = type;
+
+            button.style.textIndent = '0.25in';
+
+            button.addEventListener('click', () => {
+                const test = (id) => button.id === id ? true : false;
+                if (test('SQL')) deleteDirectory(b);
+            })
+
+            deleteMenu.appendChild(button);
+        })
+        
+        b.after(deleteMenu);
+        return true;
+    } else if (deleteMenu) {
+        deleteMenu.remove();
+        hasDeleteMenu = null;
+    }
+}
+
+function createFileField() {
+    console.log(`createFileField().ran`);
+    createModal('createFile');
+}
+
+function createModal(data) {
+    const test = (item) => data === item ? true : false;
+    loadFrame({'type': 'page', 'embed': 'modal', 'id': '000a'});
+
+    let target;
+
+    if (!checkFor('.target')) {
+        console.log(`CheckFor('.target').STATUS =`, false);
+        return;
+    } else {
+        console.log(`CheckFor('.target').STATUS =`, true);
+        target = document.querySelector('.target');
+    }
+
+    if (test('createFile')) {
+        console.log('createModal(file)');
+        const fields = document.createElement('div');
+        fields.innHTML = `
+            <input type='text' placeholder='File Name'/>
+            <input type='text' placeholder='File Type'/>
+        `
+        target.append(fields);
+    }
+}
 
 
 async function testForDirectory() {
@@ -65,9 +189,7 @@ async function toggleDatabase(b) {
 async function createDirectory(b) {
     console.log('createDirectory()');
     const create = await getJson('/api/database/initialise');
-    
-    b.id = 'delete';
-    b.innerHTML = 'DELETE';
+    const test = (id) => b.id === id ? true : false;
 
     return create;
 }
@@ -75,9 +197,6 @@ async function createDirectory(b) {
 async function deleteDirectory(b) {
     console.log('deleteDirectory()')
     const scrub = await getJson('/api/database/delete');
-
-    b.id = 'create';
-    b.innerHTML = 'CREATE';
 
     return scrub;
 }
@@ -93,12 +212,6 @@ async function getJson(url, method = 'POST') {
 
     return response.json();
 }
-
-
-
-
-
-
 
 
 let savedPage;
@@ -119,7 +232,7 @@ function loadFrame(data) {
 
         history.pushState({}, "", url);
 
-        frame.src = `/${data.embed}/index.html`;
+        frame.src = `./${data.embed}/index.html`;
 
         savedPage = {'type': 'page', 'embed': data.embed, 'id': data.id};
         return;

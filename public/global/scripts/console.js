@@ -1,3 +1,15 @@
+console.log("console.js loaded");
+import { calendar } from '/global/scripts/clock.js';
+
+const {
+    updateClock,
+    getDate,
+    getTime,
+    getFullDate
+} = calendar;
+
+
+
 const logContainer = document.getElementById("log");
 
 let separatorTimer = null;
@@ -26,9 +38,7 @@ function addLog(type, args) {
 
     separatorTimer = setTimeout(() => {
 
-        if (!firstLog) {
-            logContainer.appendChild(document.createElement("hr"));
-        }
+        logContainer.appendChild(document.createElement("hr"));
 
         firstLog = false;
 
@@ -37,9 +47,7 @@ function addLog(type, args) {
     const entry = document.createElement("div");
     entry.className = `log-entry log-${type}`;
 
-    entry.textContent = args
-        .map(stringify)
-        .join(" ");
+    entry.textContent = `${getFullDate()} ${args.map(stringify).join(" ")}`;
 
     logContainer.appendChild(entry);
 
@@ -51,12 +59,14 @@ function addLog(type, args) {
     const original = console[type];
 
     console[type] = (...args) => {
+        const timestamp = getFullDate();
 
-        // Normal browser console
-        original.apply(console, args);
+        original.call(
+            console,
+            `[${timestamp}]`,
+            ...args
+        );
 
-        // Custom log window
         addLog(type, args);
-
     };
 });

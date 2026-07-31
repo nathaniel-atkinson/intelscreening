@@ -22,6 +22,8 @@ app.use(connectLiveReload());
 
 const database = require('./data/database.js');
 
+const { directoryExists, initialiseDirectory } = database;
+
 app.post('/api/database/status', async (req,res) => {
     console.log("POST /api/database/status");
     const exists = await database.directoryExists();
@@ -34,7 +36,7 @@ app.post('/api/database/status', async (req,res) => {
 app.post('/api/database/initialise', async (req,res) => {
     console.log("POST /api/database/initialise");
     try {
-        const status = await database.initialiseDirectory();
+        const status = await initialiseDirectory();
         res.json({status});
     } catch (err) {
         console.error(err);
@@ -49,7 +51,7 @@ app.post('/api/database/initialise', async (req,res) => {
 app.post('/api/database/delete', async (req,res) => {
     console.log("POST /api/database/delete");
     try {
-        const status = await database.deleteDirectory();
+        const status = await deleteDirectory();
         res.json({status});
     } catch (err) {
         console.error(err);
@@ -60,9 +62,25 @@ app.post('/api/database/delete', async (req,res) => {
     }
 })
 
-//---FAVICON---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//---FILE WRITES---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-app.use('/api/favicon', express.static(path.join(__dirname, 'public', 'Files', 'favicon')));
+const files = require('./data/files.js');
+
+const { createFile } = files
+
+app.post('/api/file/create', async (req,res) => {
+    console.log("POST /api/file/create")
+    try {
+        await createFile(data);
+        res.json({status});
+    } catch (err) {
+        console.error(err);
+
+        res.status(500).json({
+            error: err.message
+        });
+    }
+})
 
 //---MAIN---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 

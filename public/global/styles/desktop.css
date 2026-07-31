@@ -72,15 +72,13 @@ nav {
 main {
     grid-area: 'main';
     display: grid;
-    grid-template-columns: 100px 1fr 1fr;
+    grid-template-columns: 200px 1fr 1fr;
     grid-template-areas:
         'main_left main_middle main_right'
     ;
 
     & div.left {
         grid-area: 'main_left';
-        display: flex;
-        flex-direction: column;
         gap: 5px;
     }
     & div.middle {
