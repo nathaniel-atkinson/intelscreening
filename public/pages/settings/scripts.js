@@ -1,6 +1,6 @@
 console.log('settings.js loaded');
 import { globalConsts } from '/global/scripts/scripts.js';
-import { functions, lets } from '/global/scripts/functions.js';
+import { functions } from '/global/scripts/functions.js';
 
 const {
     body,

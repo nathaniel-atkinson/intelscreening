@@ -25,6 +25,27 @@ function adjustHeader() {
     }
 }
 
+function getStorage(e) {
+    return sessionStorage.getItem(e);
+}
+
+//---EDITING THE HEADER---::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+function updateStyleSheet(data) {
+    const paper = frame.contentDocument;
+    const frameStylesLink = paper.querySelector('link[rel="stylesheet"]');
+    const stylesLink = document.querySelector('#stylesheet');
+    const test = (e) => e === data.scope;
+    if (test('global')) {
+        stylesLink.href = `/global/styles/${data.theme}.css`;
+        if (frameStylesLink) {
+            frameStylesLink.href = `/global/styles/${data.theme}.css`;
+        } else {
+            console.info('frame.contentDocument has not loaded yet');
+        }
+    }
+}
+
 //---Helper Functions---::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -37,6 +58,8 @@ const checkFor = (e) => document.querySelector(e) ? true : false;
 
 export const functions = {
     adjustHeader,
+    getStorage,
+    updateStyleSheet,
     isMobile,
     checkFor
 };

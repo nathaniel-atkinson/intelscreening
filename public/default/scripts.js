@@ -18,6 +18,8 @@ const {
 
 const {
     adjustHeader,
+    getStorage,
+    updateStyleSheet,
     isMobile,
     checkFor
 } = functions;
@@ -30,15 +32,15 @@ const {
     getFullDate
 } = calendar;
 
-window.addEventListener("DOMContentLoaded", () => {
-    adjustHeader();
+window.addEventListener("DOMContentLoaded", async () => {
+    const fileCheck = await getJson('/api/isloaded/functions.js');
+    if (fileCheck.status === 'loaded') adjustHeader();
 });
 
 let createMenu;
 let deleteMenu;
 let hasCreateMenu;
 let hasDeleteMenu;
-const stylesLink = document.querySelector('#stylesheet');
 
 buttons.forEach(b => {
     console.log('Attaching listener:', `<button id='${b.id}'/>`);
@@ -53,6 +55,13 @@ buttons.forEach(b => {
         if (checkClass('main')) {
             e.stopPropagation();
 
+            if (test('gallery')) {
+                data = await loadFrame({
+                    type: 'page',
+                    embed: 'gallery',
+                    id: '001'
+                })
+            }
             if (test('test')) data = await constructTestMenu(b);
             if (test('create')) data = await constructCreateMenu(b);
             if (test('delete')) data = await constructDeleteMenu(b);
@@ -86,19 +95,11 @@ buttons.forEach(b => {
             }
 
             if (test('lightThemeToggle')) {
-                data = await toggle('theme');
-
-                switch (data) {
-                    case true: {
-                        document.querySelector('button[id="lightThemeToggle"] span').innerHTML = 'light';
-                        stylesLink.href = '/global/styles/light.css';
-                        break;
-                    }
-                    case false: {
-                        document.querySelector('button[id="lightThemeToggle"] span').innerHTML = 'dark';
-                        stylesLink.href = '/global/styles/dark.css';
-                    }
-                }
+                data = toggle('theme');
+                console.log('data:', data);
+                const themeButton = document.querySelector('button#lightThemeToggle span');
+                themeButton.innerHTML = data;
+                updateStyleSheet({scope: 'global', theme: data})
             }
         }
 
@@ -111,13 +112,51 @@ if (sessionStorage.getItem('console') === 'false') {
     document.querySelector('button[id="consoleToggle"] span').innerHTML = 'false';
 }
 
-async function toggle(name) {
-    const current = sessionStorage.getItem(name) === 'true';
-    const next = !current;
+function initialiseTheme() {
+    console.log('initialiseTheme()');
+    var theme = getStorage('theme') ?? 'system';
+    console.log(theme);
+    if (theme) {
+        document.querySelector('button#lightThemeToggle span').innerHTML = theme;
+        const is = (e) => e === theme;
+        let now;
+        if (is('system')) now = 'light';
+        if (is('light')) now = 'dark';
+        if (is('dark')) now = 'system';
+        updateStyleSheet({scope: 'global', theme: now})
+    }
+}
 
-    sessionStorage.setItem(name, next.toString());
+initialiseTheme();
 
-    return next;
+
+function toggle(name) {
+    console.log("name:", name);
+    let current;
+    if (name === 'theme') {
+        const is = (e) => e === current;
+        let next;
+        console.log(`toggle('theme')`);
+        current = sessionStorage.getItem(name) ?? 'system';
+        if (is(undefined) || is('undefined')) {
+            sessionStorage.setItem(name, 'system');
+            current = 'system';
+        }
+        if (is('system')) next = 'light';
+        if (is('light')) next = 'dark';
+        if (is('dark')) next = 'system';
+
+        console.log("next:", next);
+        sessionStorage.setItem(name, next);
+        return next;
+    } else {
+        current = sessionStorage.getItem(name) === 'true';
+        const next = !current;
+
+        sessionStorage.setItem(name, next.toString());
+        console.log(next);
+        return next;
+    }
 }
 
 
@@ -222,20 +261,44 @@ async function createModal(type) {
 
     if (type === "createFile") {
 
-        const fields = modalDocument.createElement("div");
-
+        const fields = modalDocument.createElement('div');
         fields.innerHTML = `
-            <input type="text" placeholder="File Name">
-            <input type="text" placeholder="File Type">
+            <input id='name' type="text" placeholder="File Name" required>
+            <select id='type'>
+                <option value='txt' default>txt</option>
+                <option value='md'>md</option>
+                <option value='json'>json</option>
+            </select>
         `;
 
-        const createFile = modalDocument.querySelector('button[id="create"]');
+        target.prepend(fields);
 
-        createFile.addEventListener('click', async e => {
-            const data = await fetch('/api/file/create');
+        const createFile = modalDocument.querySelector('form');
+
+        const fileName = fields.querySelector('#name');
+        const filetype = fields.querySelector('#type');
+
+        createFile.addEventListener('submit', async e => {
+            let data;
+            try {
+                data = await fetch("/api/file/create", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: fileName.value,
+                        type: filetype.value
+                    })
+                });
+
+                fileName.value='';
+            } catch (err) {
+                throw new Error(`createFile.STATUS: ${data.status}`)
+            }
+
+            console.log(data);
         })
-
-        target.append(fields);
     }
 }
 
@@ -267,7 +330,6 @@ async function toggleDatabase(b) {
 async function createDirectory(b) {
     console.log('createDirectory()');
     const create = await getJson('/api/database/initialise');
-    const test = (id) => b.id === id ? true : false;
 
     return create;
 }
@@ -319,7 +381,7 @@ async function loadFrame(data) {
 
     return new Promise(resolve => {
         frame.onload = () => resolve(frame);
-        frame.src = `./${data.embed}/index.html`;
+        frame.src = `./pages/${data.embed}/index.html`;
     });
 }
 

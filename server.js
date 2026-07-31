@@ -21,7 +21,6 @@ app.use(connectLiveReload());
 //---SQLITE---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 const database = require('./data/database.js');
-
 const { directoryExists, initialiseDirectory } = database;
 
 app.post('/api/database/status', async (req,res) => {
@@ -64,29 +63,26 @@ app.post('/api/database/delete', async (req,res) => {
 
 //---FILE WRITES---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-const files = require('./public/Files/files.js');
+const files = require('./data/files.js');
+const { createFile } = files;
 
-const { createFile } = files
-
-app.post('/api/file/create', async (req,res) => {
+app.post("/api/file/create", async (req, res) => {
     console.log("POST /api/file/create")
+    console.log(req.body);
     try {
-        await createFile(data);
-        res.json({status});
+        await createFile(req.body);
+        res.json({ status: "success" });
     } catch (err) {
         console.error(err);
-
-        res.status(500).json({
-            error: err.message
-        });
+        res.status(500).json({ status: `error: ${err.message}` });
     }
-})
+});
 
 //---MAIN---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 app.get('/', (req,res) => {
     const file = path.join(
-        __dirname, "public", "home", "index.html"
+        __dirname, "public", "default", "index.html"
     );
 
     res.sendFile(file, (err) => {
@@ -115,9 +111,12 @@ app.get('/:page/styles.css', (req, res) => {
 
 app.use('/global', express.static(path.join(__dirname, 'public', 'global')));
 
-//---PUBLIC FILES---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//---FILE CHECKS---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
+app.get('/api/isloaded/functions.js', (res,req) => {
+    const file = path.join(__dirname, 'public', 'global', 'scripts', 'functions.js');
+    if (file) res.json({ status: 'loaded' })
+})
 
 
 

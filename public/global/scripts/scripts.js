@@ -1,5 +1,9 @@
 console.log("global.js loaded");
 
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('global.scripts.js loaded');
+})
+
 const body = document.querySelector('body');
 const header = document.querySelector('header');
 const nav = document.querySelector('nav');
