@@ -40,21 +40,26 @@ window.addEventListener("DOMContentLoaded", () => {
 
 buttons.forEach(b => {
     console.log('Attaching listener:', `<button id='${b.id}'/>`);
+    const checkClass = (className) => b.classList.contains(className) ? true : false ;
 
+    if (checkClass('main')){
+        b.addEventListener('click', async (e) => {
+            e.stopPropagation();
 
-    b.addEventListener('click', async (e) => {
-        e.stopPropagation();
+            const test = (id) => id === b.id ? true : false ;
+            let data;
 
-        let data;
+            let prop = b.id;
 
-        let prop = b.id;
-
-        if (b.id === 'test') data = await constructTestMenu(b);
-        if (b.id === 'create') data = await constructCreateMenu(b);
-        if (b.id === 'delete') data = await constructDeleteMenu(b);
-  
-        console.log (b.id,'.STATUS:', data);
-    })
+            if (test('test')) data = await constructTestMenu(b);
+            if (test('create')) data = await constructCreateMenu(b);
+            if (test('delete')) data = await constructDeleteMenu(b);
+            if (test('settings')) data = await loadFrame({'type': 'page', 'embed': 'settings', 'id': '100'});
+    
+            console.log (b.id,'.STATUS:', data);
+        })
+        return;
+    }
 })
 
 async function constructTestMenu(b) {

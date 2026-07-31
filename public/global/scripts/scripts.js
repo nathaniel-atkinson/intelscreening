@@ -9,7 +9,7 @@ const main = document.querySelector('main');
         const frame = main_m?.querySelector('iframe');
     const main_r = main?.querySelector('.right');
 const footer = document.querySelector('footer');
-const buttons = document.querySelectorAll('button.main');
+const buttons = document.querySelectorAll('button');
 
 export const globalConsts = {
     body,
