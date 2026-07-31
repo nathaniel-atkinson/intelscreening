@@ -42,6 +42,7 @@ let deleteMenu;
 let hasCreateMenu;
 let hasDeleteMenu;
 
+console.groupCollapsed('buttons.main');
 buttons.forEach(b => {
     console.log('Attaching listener:', `<button id='${b.id}'/>`);
 
@@ -105,7 +106,9 @@ buttons.forEach(b => {
 
         console.log(b.id, '.STATUS:', data);
     });
+
 });
+console.groupEnd();
 
 if (sessionStorage.getItem('console') === 'false') {
     main.style.gridTemplateColumns = '200px 2fr 0fr';
@@ -303,6 +306,10 @@ async function createModal(type) {
 }
 
 
+
+//---SQL DIR---::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 async function testForDirectory() {
 
     const check = await getJson('/api/database/status');
@@ -353,6 +360,8 @@ async function getJson(url, method = 'POST') {
     return response.json();
 }
 
+
+//---PAGES---::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 let savedPage;
 

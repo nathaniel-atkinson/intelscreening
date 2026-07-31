@@ -1,5 +1,19 @@
 console.log("console.js loaded");
 import { calendar } from '/global/scripts/clock.js';
+import { globalConsts } from "/global/scripts/scripts.js";
+
+const {
+    body,
+    header,
+    nav,
+    main,
+        main_l,
+        main_m,
+            frame,
+        main_r,
+    footer,
+    buttons
+} = globalConsts;
 
 const {
     updateClock,
@@ -55,18 +69,25 @@ function addLog(type, args) {
 }
 
 ["log", "info", "warn", "error", "debug"].forEach(type => {
-
     const original = console[type];
 
     console[type] = (...args) => {
-        const timestamp = getFullDate();
-
-        original.call(
-            console,
-            `[${timestamp}]`,
-            ...args
-        );
-
+        original.call(console, `[${getFullDate()}]`, ...args);
         addLog(type, args);
     };
+});
+
+function hookConsole(win) {
+    ["log", "info", "warn", "error", "debug"].forEach(type => {
+        const original = win.console[type];
+
+        win.console[type] = (...args) => {
+            console[type]("[iframe]", ...args);
+            original.apply(win.console, args);
+        };
+    });
+}
+
+frame.addEventListener("load", () => {
+    hookConsole(frame.contentWindow);
 });

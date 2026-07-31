@@ -61,13 +61,30 @@ app.post('/api/database/delete', async (req,res) => {
     }
 })
 
-//---FILE WRITES---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//---FILE READS---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 const files = require('./data/files.js');
-const { createFile } = files;
+const { createFile, readDir } = files;
+
+app.post('/api/files/dir', async (req, res) => {
+    console.log('POST /api/files/dir');
+    try {
+        const data = await readDir();
+        res.json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            status: `error: ${err.message}`
+        });
+    }
+});
+
+
+
+//---FILE WRITES---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 app.post("/api/file/create", async (req, res) => {
-    console.log("POST /api/file/create")
+    console.log("POST /api/file/create");
     console.log(req.body);
     try {
         await createFile(req.body);
