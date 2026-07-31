@@ -59,7 +59,7 @@ buttons.forEach(b => {
 
 async function constructTestMenu(b) {
     const testMenu = document.createElement('div');
-    testMenu.innHTML = `
+    testMenu.innerHTML = `
     `;
 }
 
@@ -136,27 +136,32 @@ function createFileField() {
     createModal('createFile');
 }
 
-function createModal(data) {
-    const test = (item) => data === item ? true : false;
-    loadFrame({'type': 'page', 'embed': 'modal', 'id': '000a'});
+async function createModal(type) {
 
-    let target;
+    const iframe = await loadFrame({
+        type: "page",
+        embed: "modal",
+        id: "000a"
+    });
 
-    if (!checkFor('.target')) {
-        console.log(`CheckFor('.target').STATUS =`, false);
+    const modalDocument = iframe.contentDocument;
+
+    const target = modalDocument.querySelector(".target");
+
+    if (!target) {
+        console.error("Modal target not found.");
         return;
-    } else {
-        console.log(`CheckFor('.target').STATUS =`, true);
-        target = document.querySelector('.target');
     }
 
-    if (test('createFile')) {
-        console.log('createModal(file)');
-        const fields = document.createElement('div');
-        fields.innHTML = `
-            <input type='text' placeholder='File Name'/>
-            <input type='text' placeholder='File Type'/>
-        `
+    if (type === "createFile") {
+
+        const fields = modalDocument.createElement("div");
+
+        fields.innerHTML = `
+            <input type="text" placeholder="File Name">
+            <input type="text" placeholder="File Type">
+        `;
+
         target.append(fields);
     }
 }
@@ -222,26 +227,25 @@ else {
     loadFrame(savedPage);
 }
 
-function loadFrame(data) {
+async function loadFrame(data) {
 
-    if (data.type === 'page') {
-        const url = new URL(window.location);
+    if (data.type !== "page") return;
 
-        url.searchParams.set("embed", "page");
-        url.searchParams.set("id", data.id);
+    const url = new URL(window.location);
 
-        history.pushState({}, "", url);
+    url.searchParams.set("embed", "page");
+    url.searchParams.set("id", data.id);
 
+    history.pushState({}, "", url);
+
+    savedPage = {
+        type: "page",
+        embed: data.embed,
+        id: data.id
+    };
+
+    return new Promise(resolve => {
+        frame.onload = () => resolve(frame);
         frame.src = `./${data.embed}/index.html`;
-
-        savedPage = {'type': 'page', 'embed': data.embed, 'id': data.id};
-        return;
-    }
-    
-    if (data.type === 'file') {
-        const url = new URL(window.location);
-
-        url.searchParams.set('embed', 'file');
-        url.searchParams.set('id', data.id);
-    }
+    });
 }
