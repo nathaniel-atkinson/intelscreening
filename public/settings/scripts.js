@@ -16,22 +16,10 @@ const {
 } = globalConsts;
 
 const {
-    adjustHeader,
     isMobile,
     checkFor
 } = functions;
 
 const test = (instance, element) => instance === element.id ? true : false;
-
-buttons.forEach(b => {
-    b.addEventListener('click', (e) => {
-        if(test('console', b)) {
-            const session = sessionStorage.getItem('console');
-            if (session) sessionStorage.setItem('console', false);
-            else sessionStorage.setItem('console', true)
-        }
-    })
-})
-
 
 

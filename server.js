@@ -64,7 +64,7 @@ app.post('/api/database/delete', async (req,res) => {
 
 //---FILE WRITES---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-const files = require('./data/files.js');
+const files = require('./public/Files/files.js');
 
 const { createFile } = files
 

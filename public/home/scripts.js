@@ -1,7 +1,7 @@
 console.log("scripts.js loaded");
 import { globalConsts } from '/global/scripts/scripts.js';
 import { calendar } from '/global/scripts/clock.js';
-import { functions, lets } from '/global/scripts/functions.js';
+import { functions } from '/global/scripts/functions.js';
 
 const {
     body,
@@ -22,10 +22,6 @@ const {
     checkFor
 } = functions;
 
-let {
-    hasDeleteMenu,
-    hasCreateMenu
-} = lets;
 
 const {
     updateClock,
@@ -38,29 +34,92 @@ window.addEventListener("DOMContentLoaded", () => {
     adjustHeader();
 });
 
+let createMenu;
+let deleteMenu;
+let hasCreateMenu;
+let hasDeleteMenu;
+const stylesLink = document.querySelector('#stylesheet');
+
 buttons.forEach(b => {
     console.log('Attaching listener:', `<button id='${b.id}'/>`);
-    const checkClass = (className) => b.classList.contains(className) ? true : false ;
 
-    if (checkClass('main')){
-        b.addEventListener('click', async (e) => {
+    const checkClass = className => b.classList.contains(className);
+    const test = id => id === b.id;
+
+    b.addEventListener('click', async e => {
+        e.stopPropagation();
+        let data;
+
+        if (checkClass('main')) {
             e.stopPropagation();
-
-            const test = (id) => id === b.id ? true : false ;
-            let data;
-
-            let prop = b.id;
 
             if (test('test')) data = await constructTestMenu(b);
             if (test('create')) data = await constructCreateMenu(b);
             if (test('delete')) data = await constructDeleteMenu(b);
-            if (test('settings')) data = await loadFrame({'type': 'page', 'embed': 'settings', 'id': '100'});
-    
-            console.log (b.id,'.STATUS:', data);
-        })
-        return;
-    }
-})
+            if (test('settings')) {
+                data = await loadFrame({
+                    type: 'page',
+                    embed: 'settings',
+                    id: '100'
+                });
+            }
+        }
+
+        if (checkClass('setting')) {
+            e.stopPropagation();
+
+            if (test('consoleToggle')) {
+                data = await toggle('console');
+
+                switch (data) {
+                    case true: {
+                        main.style.gridTemplateColumns = '200px 1fr 1fr';
+                        document.querySelector('button[id="consoleToggle"] span').innerHTML = 'true';
+                        break;
+                    }
+                    case false: {
+                        main.style.gridTemplateColumns = '200px 2fr 0fr';
+                        document.querySelector('button[id="consoleToggle"] span').innerHTML = 'false';
+                        break;
+                    }
+                }
+            }
+
+            if (test('lightThemeToggle')) {
+                data = await toggle('theme');
+
+                switch (data) {
+                    case true: {
+                        document.querySelector('button[id="lightThemeToggle"] span').innerHTML = 'light';
+                        stylesLink.href = '/global/styles/light.css';
+                        break;
+                    }
+                    case false: {
+                        document.querySelector('button[id="lightThemeToggle"] span').innerHTML = 'dark';
+                        stylesLink.href = '/global/styles/dark.css';
+                    }
+                }
+            }
+        }
+
+        console.log(b.id, '.STATUS:', data);
+    });
+});
+
+if (sessionStorage.getItem('console') === 'false') {
+    main.style.gridTemplateColumns = '200px 2fr 0fr';
+    document.querySelector('button[id="consoleToggle"] span').innerHTML = 'false';
+}
+
+async function toggle(name) {
+    const current = sessionStorage.getItem(name) === 'true';
+    const next = !current;
+
+    sessionStorage.setItem(name, next.toString());
+
+    return next;
+}
+
 
 async function constructTestMenu(b) {
     const testMenu = document.createElement('div');
@@ -68,7 +127,6 @@ async function constructTestMenu(b) {
     `;
 }
 
-let createMenu;
 async function constructCreateMenu(b) {
     console.log(`constructCreateMenu(${b.id}).clicked`)
     if (!hasCreateMenu) {
@@ -99,12 +157,11 @@ async function constructCreateMenu(b) {
         return true;
     } else {
         createMenu.remove();
-        hasCreateMenu = null;
+        hasCreateMenu = false;
         return false;
     }
 }
 
-let deleteMenu;
 async function constructDeleteMenu(b) {
     
     if (!hasDeleteMenu) {
@@ -132,8 +189,13 @@ async function constructDeleteMenu(b) {
         return true;
     } else if (deleteMenu) {
         deleteMenu.remove();
-        hasDeleteMenu = null;
+        hasDeleteMenu = false;
     }
+}
+
+export const menus = {
+    createMenu,
+    deleteMenu
 }
 
 function createFileField() {
@@ -166,6 +228,12 @@ async function createModal(type) {
             <input type="text" placeholder="File Name">
             <input type="text" placeholder="File Type">
         `;
+
+        const createFile = modalDocument.querySelector('button[id="create"]');
+
+        createFile.addEventListener('click', async e => {
+            const data = await fetch('/api/file/create');
+        })
 
         target.append(fields);
     }
@@ -254,3 +322,26 @@ async function loadFrame(data) {
         frame.src = `./${data.embed}/index.html`;
     });
 }
+
+
+//---REMOVE TEMPORARY ELEMENTS---::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+body.addEventListener('click', (e) => {
+    document.querySelectorAll('.temp').forEach(i => {
+        if (!i.contains(e.target)) {
+            console.log('Removing:', i);
+
+            i.remove();
+
+            if (i === deleteMenu) {
+                deleteMenu = null;
+                hasDeleteMenu = false;
+            }
+
+            if (i === createMenu) {
+                createMenu = null;
+                hasCreateMenu = false;
+            }
+        }
+    });
+});
