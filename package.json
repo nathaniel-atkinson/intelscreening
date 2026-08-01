@@ -12,17 +12,31 @@
   },
   "license": "ISC",
   "author": "nathaniel",
-  "type": "commonjs",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "@angular/core": "^22.1.0",
     "express": "^5.2.1",
     "livereload": "^0.10.3",
-    "mysql": "^2.18.1",
-    "node.js": "^0.0.1-security",
-    "typescript": "^7.0.2"
+    "mysql2": "^3.23.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.2",
+    "eslint": "^10.8.0",
+    "globals": "^17.8.0",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.1",
+    "typescript": "5.9",
+    "typescript-eslint": "^8.65.0"
   }
 }
