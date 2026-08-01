@@ -2,34 +2,18 @@
   font-family: "Courier New", Courier, monospace;
 }
 
-#page {
-  display: grid;
-  grid-template-rows: 100px 100px 1fr 100px;
-  grid-template-areas: "header", "nav", "main", "footer";
-
-  & > * {
-    &:hover {
-      background-color: rgba(255, 255, 0, 0.5);
+.selectable {
+  &:hover {
+    &.underline {
+      text-decoration: underline;
     }
-  }
-
-  & header {
-    grid-area: "header";
-    grid-row: 1;
-  }
-
-  & nav {
-    grid-area: "nav";
-    grid-row: 2;
-  }
-
-  & main {
-    grid-area: "main";
-    grid-row: 3;
-  }
-
-  & footer {
-    grid-area: "footer";
-    grid-row: 4;
+    font-weight: 700;
+    background-color: rgba(255, 255, 0, 0.5);
+    &::before {
+      content: "> ";
+    }
+    &::after {
+      content: " <";
+    }
   }
 }

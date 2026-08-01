@@ -1,0 +1,58 @@
+#window {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 200px auto 200px;
+  grid-template-areas: "left main right";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  & > * {
+    &:hover {
+      background-color: rgba(255, 255, 0, 0.05);
+    }
+  }
+}
+
+aside {
+  margin: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: smaller;
+}
+
+#page {
+  grid-area: "main";
+  grid-column: 2;
+  display: grid;
+  grid-template-rows: 50px 50px 1fr 50px;
+  grid-template-areas: "header", "nav", "main", "footer";
+  border-inline: 1px solid var(--border);
+
+  & > * {
+    &:hover {
+      background-color: rgba(255, 255, 0, 0.25);
+    }
+  }
+
+  & header {
+    grid-area: "header";
+    grid-row: 1;
+  }
+
+  & nav {
+    grid-area: "nav";
+    grid-row: 2;
+  }
+
+  & main {
+    grid-area: "main";
+    grid-row: 3;
+  }
+
+  & footer {
+    grid-area: "footer";
+    grid-row: 4;
+  }
+}

@@ -9,6 +9,8 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+//---getDir---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
+
 async function getDir(term: string): Promise<string[]> {
   let dirPath: PathLike;
   if (term === "database files") {
@@ -23,27 +25,28 @@ async function getDir(term: string): Promise<string[]> {
   }
 }
 
+//---createFile---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
+
 async function createFile(
   fileName: string,
   fileType: string,
   initialContent: string = "",
 ): Promise<string> {
-  // Construct the secure path to your database folder
   const filePath = path.join(
     __dirname,
     "..",
-    "src", // Adjusted from ".src" to "src" (modify if hidden folder is intended)
+    "src",
     "database",
     `${fileName}.${fileType}`,
   );
 
   try {
-    // Ensure the target directory exists before writing
+    // Ensures existance of target directery
     fs.mkdir(path.dirname(filePath), { recursive: true });
 
     // Asynchronously write the file with proper async/await
-    await fs.writeFile(filePath, initialContent, "utf-8");
-
+    fs.writeFile(filePath, initialContent, "utf-8");
+    console.log(`getDir().STATUS = success`);
     return filePath;
   } catch (error) {
     console.error("Failed to create file:", error);
@@ -51,10 +54,14 @@ async function createFile(
   }
 }
 
+//---readDataFile---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
+
 async function readDataFile(fileName: string): Promise<string> {
   const filePath = path.join(__dirname, "../../data", fileName);
   return fs.readFile(filePath, "utf-8");
 }
+
+//---EXPORTS---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 
 export const files = {
   getDir,
