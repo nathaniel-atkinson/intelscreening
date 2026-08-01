@@ -2,7 +2,7 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "./src",
+    "rootDir": "server/src",
     "outDir": "./dist",
 
     // Environment Settings
@@ -11,6 +11,7 @@
     "moduleResolution": "NodeNext",
     "target": "ES2022",
     "types": ["node"],
+    "include": ["src/**/*.ts"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],

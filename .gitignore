@@ -1,1 +1,3 @@
 /server/node_modules/
+/clients/angular-client/node_modules/
+/clients/react-client/node_modules/

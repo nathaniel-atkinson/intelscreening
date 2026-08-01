@@ -13,9 +13,9 @@
   "license": "ISC",
   "author": "nathaniel",
   "type": "module",
-  "main": "dist/server.ts",
+  "main": "dist/server.js",
   "scripts": {
-    "dev": "tsx watch src/server.js",
+    "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "eslint .",
@@ -23,7 +23,6 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "@angular/core": "^22.1.0",
     "express": "^5.2.1",
     "livereload": "^0.10.3",
     "mysql2": "^3.23.2"
