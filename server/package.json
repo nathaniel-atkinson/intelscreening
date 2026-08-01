@@ -15,7 +15,7 @@
   "type": "module",
   "main": "dist/server.ts",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/server.js",
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "eslint .",
