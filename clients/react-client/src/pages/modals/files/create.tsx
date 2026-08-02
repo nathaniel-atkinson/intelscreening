@@ -1,3 +1,5 @@
+import "../../../componants/menus/menus.css";
+
 type CreateProps = {
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
@@ -5,7 +7,7 @@ type CreateProps = {
   setType: React.Dispatch<React.SetStateAction<string>>;
 };
 
-function Create({ name, setName, type, setType }: CreateProps) {
+function CreateFile({ name, setName, type, setType }: CreateProps) {
   const types = ["txt", "md", "json"];
 
   return (
@@ -29,4 +31,4 @@ function Create({ name, setName, type, setType }: CreateProps) {
   );
 }
 
-export default Create;
+export default CreateFile;

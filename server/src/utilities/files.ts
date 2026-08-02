@@ -1,5 +1,6 @@
+console.log("files.ts loaded");
 import { dir } from "console";
-import type { PathLike } from "fs";
+import type { PathLike, PathOrFileDescriptor } from "fs";
 import fs from "fs/promises";
 import path from "path";
 
@@ -27,27 +28,33 @@ async function getDir(term: string): Promise<string[]> {
 
 //---createFile---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 
+const date: Date = new Date();
+const timeStamp = date.getDate().toString();
+
 async function createFile(
   fileName: string,
   fileType: string,
-  initialContent: string = "",
+  initialContent: string = timeStamp,
 ): Promise<string> {
-  const filePath = path.join(
+  const filePath: PathLike = path.join(
     __dirname,
     "..",
-    "src",
     "database",
+    "files",
     `${fileName}.${fileType}`,
   );
 
+  console.log(`createFile(${fileName}.${fileType})`);
   try {
-    // Ensures existance of target directery
-    fs.mkdir(path.dirname(filePath), { recursive: true });
-
     // Asynchronously write the file with proper async/await
-    fs.writeFile(filePath, initialContent, "utf-8");
-    console.log(`getDir().STATUS = success`);
-    return filePath;
+    await fs.writeFile(filePath, initialContent, "utf-8");
+    console.log(`createFile().STATUS =`, true);
+    const gift: string = JSON.stringify({
+      status: true,
+      result: true,
+      message: `Created file @${filePath}`,
+    });
+    return gift;
   } catch (error) {
     console.error("Failed to create file:", error);
     throw error;
@@ -56,15 +63,16 @@ async function createFile(
 
 //---readDataFile---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 
-async function readDataFile(fileName: string): Promise<string> {
-  const filePath = path.join(__dirname, "../../data", fileName);
-  return fs.readFile(filePath, "utf-8");
+async function fetchFile(fileName: string): Promise<string> {
+  const filePath = path.join(__dirname, "../../database", "files", fileName);
+  const gift = await fs.readFile(filePath, "utf-8");
+  return gift;
 }
 
 //---EXPORTS---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 
 export const files = {
   getDir,
-  readDataFile,
+  fetchFile,
   createFile,
 };

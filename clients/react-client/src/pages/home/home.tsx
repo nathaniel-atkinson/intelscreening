@@ -1,7 +1,7 @@
 function Home() {
   return (
     <>
-      <h1>Intel Screening</h1>
+      <h2>Intel Screening</h2>
       <p>Home</p>
     </>
   );

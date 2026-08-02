@@ -1,5 +1,5 @@
 async function createFile(name: string, type: string): Promise<Response> {
-  const data = await fetch("/api/files/createFile", {
+  const data = await fetch("/api/files/create", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
