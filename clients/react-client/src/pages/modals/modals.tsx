@@ -3,6 +3,7 @@ import { navigate } from "../../componants/main";
 
 import CreateFile from "./files/create";
 import { functions } from "./files/files";
+import { createPortal } from "react-dom";
 
 const { createFile } = functions;
 
@@ -38,7 +39,7 @@ function Modals() {
     }
   };
 
-  return (
+  return createPortal(
     <form onSubmit={handleSubmit}>
       {CurrentModal ? (
         <CurrentModal
@@ -52,7 +53,8 @@ function Modals() {
       )}
 
       <button type="submit">Create</button>
-    </form>
+    </form>,
+    document.body,
   );
 }
 

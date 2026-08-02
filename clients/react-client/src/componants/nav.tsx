@@ -1,12 +1,15 @@
-import { navigate } from "./main";
+import "./components.css";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 function Nav() {
   return (
-    <nav>
-      <button onClick={() => navigate("home")}>Home</button>
-      <button onClick={() => navigate("directory")}>Directory</button>
-      <button onClick={() => navigate("settings")}>Settings</button>
-    </nav>
+    <>
+      <BrowserRouter>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/directory">Directory</NavLink>
+        <NavLink to="/settings">Settings</NavLink>
+      </BrowserRouter>
+    </>
   );
 }
 

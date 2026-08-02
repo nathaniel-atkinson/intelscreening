@@ -4,6 +4,7 @@ import Home from "../pages/home/home";
 import Directory from "../pages/directory/directory";
 import Settings from "../pages/settings/settings";
 import Modal from "../pages/modals/modals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const pages = {
   home: Home,
@@ -74,9 +75,15 @@ function Main() {
   const CurrentPage = pages[page];
 
   return (
-    <main>
-      <CurrentPage />
-    </main>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/?embed=home" element={<Home />}></Route>
+          <Route path="/?embed=directory" element={<Directory />}></Route>
+          <Route path="/?embed=settings" element={<Settings />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
