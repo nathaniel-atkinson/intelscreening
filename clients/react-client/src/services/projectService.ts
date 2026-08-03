@@ -1,3 +1,4 @@
 export async function getProjects() {
-  return fetch("/api/projects");
+  const res = await fetch("/api/projects");
+  return res.json();
 }

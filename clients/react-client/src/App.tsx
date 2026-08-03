@@ -1,5 +1,4 @@
-import MainLayout from "./layouts/mainLayout";
-import "./App.css";
+import MainLayout from "./componants/layout/mainLayout";
 
 function App() {
   return <MainLayout />;

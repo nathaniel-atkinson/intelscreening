@@ -1,7 +1,8 @@
 //---Get Dir---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 export async function getDir() {
-  return fetch("/api/files/getDir");
+  const gift = await fetch("/api/files/getDir");
+  return gift.json();
 }
 
 //---Create File---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -11,7 +12,7 @@ interface CreateFileData {
   type: string;
 }
 export async function createFile(data: CreateFileData) {
-  return fetch("/api/files/getDir", {
+  const gift = await fetch("/api/files/getDir", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,4 +22,5 @@ export async function createFile(data: CreateFileData) {
       fileType: data.type,
     }),
   });
+  return gift.json();
 }
