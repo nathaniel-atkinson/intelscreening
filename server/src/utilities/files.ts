@@ -1,6 +1,6 @@
 console.log("files.ts loaded");
 import { dir } from "console";
-import type { PathLike, PathOrFileDescriptor } from "fs";
+import type { PathLike } from "fs";
 import fs from "fs/promises";
 import path from "path";
 
@@ -31,11 +31,18 @@ async function getDir(term: string): Promise<string[]> {
 const date: Date = new Date();
 const timeStamp = date.getDate().toString();
 
+interface CreateFileData {
+  fileName: string;
+  fileType: string;
+  initialContent: string;
+}
+
 async function createFile(
-  fileName: string,
-  fileType: string,
-  initialContent: string = timeStamp,
+  data: CreateFileData,
+  initialContent = timeStamp,
 ): Promise<string> {
+  const { fileName, fileType } = data;
+
   const filePath: PathLike = path.join(
     __dirname,
     "..",
