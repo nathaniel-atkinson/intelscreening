@@ -1,4 +1,3 @@
-import "./components.css";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 
 function Nav() {

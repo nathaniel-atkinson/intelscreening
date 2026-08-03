@@ -12,11 +12,9 @@ const __dirname = path.dirname(__filename);
 
 //---getDir---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 
-async function getDir(term: string): Promise<string[]> {
+async function getDir(): Promise<string[]> {
   let dirPath: PathLike;
-  if (term === "database files") {
-    dirPath = path.join(__dirname, "..", "database", "files");
-  } else dirPath = path.join(__dirname, "..", "database", "files");
+  dirPath = path.join(__dirname, "..", "database", "files");
   try {
     const files: string[] = await fs.readdir(dirPath);
     return files;

@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "concurrently": "^10.0.4",
+    "kill-port": "^2.0.1"
+  },
+  "scripts": {
+    "dev:react": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client-react\"",
+    "server": "npm --prefix server run dev",
+    "client-react": "npm --prefix clients/react-client run dev",
+    "kill:react": "kill-port 5173 3525"
+  }
+}

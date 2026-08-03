@@ -6,9 +6,9 @@ import type { PathLike } from "fs";
 
 const router = Router();
 
-router.post("/getDir", async (req, res) => {
+router.get("/getDir", async (req, res) => {
   try {
-    const gift = await files.getDir(req.body.term);
+    const gift = await files.getDir();
     res.json(gift);
   } catch (err) {
     res.status(500).json({
