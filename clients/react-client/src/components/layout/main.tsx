@@ -1,14 +1,17 @@
-import LeftSidePanel from "./left__sidePanel";
-import RightSidePanel from "./right__sidePanel";
-import ProjectTree from "../projects/projectTree";
+import AppRoutes from "../../routes/routes.js";
+import "./layout.css";
+import App from "../../App.js";
 
 function Main() {
   return (
-    <>
-      <LeftSidePanel />
-      <ProjectTree />
-      <RightSidePanel />
-    </>
+    <main
+      data-type="mainLayoutComponent"
+      style={{
+        gridArea: "main",
+      }}
+    >
+      <AppRoutes />
+    </main>
   );
 }
 

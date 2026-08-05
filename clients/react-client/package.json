@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "react": "^19.2.8",
+    "react-clock": "^6.0.0",
     "react-dom": "^19.2.8",
-    "react-router-dom": "^7.11.0"
+    "react-router-dom": "^7.18.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

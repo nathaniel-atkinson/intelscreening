@@ -1,5 +1,11 @@
 * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   font-family: "Courier New", Courier, monospace;
+
+  transition-duration: 0.2s;
 }
 
 .selectable {

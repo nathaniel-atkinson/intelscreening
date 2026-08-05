@@ -1,0 +1,42 @@
+[data-type="screen"] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  /*---Main Elements---*/
+
+  & nav {
+    & NavLink {
+      &:hover {
+        text-transform: uppercase;
+      }
+    }
+
+    & #clock {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    & [data-place="center"] {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      gap: 20px;
+    }
+  }
+
+  & main {
+    border: solid black 1px;
+    height: 100%;
+  }
+}
+
+[data-type="mainLayoutComponent"] {
+  &:hover {
+    background-color: rgba(255, 255, 0, 0.15);
+  }
+}

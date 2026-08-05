@@ -1,27 +1,34 @@
-import { ReactNode, Suspense } from "react";
-import { getDir } from "../../services/filesService";
-
-const projects = [
-  { id: 1, name: "Boggle" },
-  { id: 2, name: "Casting Shadows" },
-  { id: 3, name: "Kentucky Derby Poker" },
-];
-
-function Items() {
-  return projects.map((item) => <p key={item.id}>{item.name}</p>);
-}
+import { useState, useEffect } from "react";
+import { Suspense } from "react";
+import { getDir } from "../../services/filesService.js";
 
 function Directory() {
-  const gift = getDir();
-  return <p>{gift}</p>;
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    async function loadFiles() {
+      const gift = await getDir();
+      const data = await gift;
+      setFiles(data);
+    }
+
+    loadFiles();
+  }, []);
+
+  return (
+    <div>
+      {files.map((file) => (
+        <p key={file} className="selectable">
+          {file}
+        </p>
+      ))}
+    </div>
+  );
 }
 
 function ProjectTree() {
   return (
     <>
-      <main>
-        <p>Main</p>
-      </main>
       <Suspense fallback={<div>Loading...</div>}>
         <Directory />
       </Suspense>
