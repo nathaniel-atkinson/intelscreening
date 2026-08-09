@@ -1,4 +1,8 @@
-const pages = import.meta.glob("./pages/*.tsx", {
+const pages = import.meta.glob("./*.tsx", {
+  eager: true,
+});
+
+export const nestedFilePages = import.meta.glob("./files/*.tsx", {
   eager: true,
 });
 

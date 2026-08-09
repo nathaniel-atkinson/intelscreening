@@ -1,4 +1,5 @@
 import { Routes, Route, NavLink } from "react-router-dom";
+import type { NavLinkRenderProps } from "react-router-dom";
 
 import pages from "../components/pages/pages.js";
 
@@ -15,12 +16,28 @@ const pageList = Object.entries(pages).map(([path, module]) => {
 });
 
 export function Navigation() {
+  const navLinkStyles = ({ isActive }: NavLinkRenderProps) => ({
+    color: isActive ? "#007bff" : "#333",
+    textDecoration: isActive ? "none" : "underline",
+    fontWeight: isActive ? "bold" : "normal",
+    padding: "5px 10px",
+  });
+
   return (
     <>
       {pageList.map(({ name, path }) => (
-        <NavLink key={name} to={path}>
-          {name}
-        </NavLink>
+        <div
+          key={name}
+          style={{
+            width: "auto",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <NavLink to={path} style={navLinkStyles}>
+            {name}
+          </NavLink>
+        </div>
       ))}
     </>
   );
@@ -30,13 +47,9 @@ function AppRoutes() {
   return (
     <Routes>
       {pageList.map(({ name, path, Component }) => (
-        <Route key={name} path={path} element={<Component />} />
+        <Route key={name} path={`/${path}/*`} element={<Component />} />
       ))}
     </Routes>
   );
 }
-
-console.log(pages);
-console.log(Object.keys(pages));
-
 export default AppRoutes;

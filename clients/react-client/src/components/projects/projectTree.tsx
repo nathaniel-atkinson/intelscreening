@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Suspense } from "react";
-import { getDir } from "../../services/filesService.js";
+import { getDir, fetchFile } from "../../services/filesService.js";
 
 function Directory() {
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<string[]>([]);
 
   useEffect(() => {
     async function loadFiles() {
@@ -15,13 +15,17 @@ function Directory() {
     loadFiles();
   }, []);
 
+  function Entries() {
+    return files.map((file) => (
+      <p key={file} className="selectable" onClick={fetchFile(file)}>
+        {file}
+      </p>
+    ));
+  }
+
   return (
     <div>
-      {files.map((file) => (
-        <p key={file} className="selectable">
-          {file}
-        </p>
-      ))}
+      <Entries />
     </div>
   );
 }

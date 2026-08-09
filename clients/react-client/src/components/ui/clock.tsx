@@ -33,11 +33,21 @@ function Clock() {
   }
 
   function getTime(): string {
-    const hours = String(now.getHours()).padStart(2, "0");
+    var padStart = {
+      number: 2,
+      shape: "0",
+    };
+
+    var number = padStart.number;
+    var shape = padStart.shape;
+
+    const rawHours = now.getHours();
+    const hours = String(rawHours % 12 || 12).padStart(2, "0");
     const minutes = String(now.getMinutes()).padStart(2, "0");
     const seconds = String(now.getSeconds()).padStart(2, "0");
+    const amPM = rawHours >= 12 ? "PM" : "AM";
 
-    return `${hours}:${minutes}:${seconds}`;
+    return `${hours}:${minutes}:${seconds} — ${amPM}`;
   }
 
   function getDate(): string {

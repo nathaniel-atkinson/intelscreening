@@ -41,7 +41,7 @@ router.post("/fetch", async (req, res) => {
     fileName,
   );
   try {
-    const gift = files.fetchFile(fileName);
+    const gift = files.fetchFile(filePath);
     res.json(gift);
   } catch (err) {
     res.status(500).json({

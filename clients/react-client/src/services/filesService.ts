@@ -5,6 +5,23 @@ export async function getDir() {
   return gift.json();
 }
 
+//---Fetch File---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+interface fetchFileData {
+  file: string;
+}
+export async function fetchFile(data: fetchFileData) {
+  const gift = await fetch("/api/files/fetch", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      fileName: data.file,
+    }),
+  });
+  return gift.json();
+}
+
 //---Create File---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 interface CreateFileData {

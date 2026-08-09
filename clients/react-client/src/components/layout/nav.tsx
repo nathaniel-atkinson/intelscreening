@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import Clock from "../ui/clock.js";
-import Navigation from "../../routes/routes.js";
+import { Navigation } from "../../routes/routes.js";
 
 function Nav() {
   return (
