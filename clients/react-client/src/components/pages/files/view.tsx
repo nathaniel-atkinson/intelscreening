@@ -10,14 +10,16 @@ export default function View() {
   useEffect(() => {
     if (!fileName) return;
 
+    const name = fileName;
+
     async function loadFile() {
       try {
         const response = await fetch(
-          `/api/files/view/${encodeURIComponent(fileName)}`,
+          `/api/files/view/${encodeURIComponent(name)}`,
         );
 
         if (!response.ok) {
-          throw new Error(`Failed to load ${fileName}`);
+          throw new Error(`Failed to load ${name}`);
         }
 
         const text = await response.text();
@@ -29,6 +31,31 @@ export default function View() {
 
     loadFile();
   }, [fileName]);
+
+  async function saveFile() {
+    if (!fileName) return;
+
+    try {
+      const response = await fetch(
+        `/api/files/view/${encodeURIComponent(fileName)}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "text/plain",
+          },
+          body: content,
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to save ${fileName}`);
+      }
+
+      console.log(`Saved ${fileName}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save file");
+    }
+  }
 
   if (error) {
     return <div>{error}</div>;
@@ -43,9 +70,13 @@ export default function View() {
     >
       <h1>{fileName}</h1>
 
+      <button onClick={saveFile}>Save</button>
+
       <textarea
         value={content}
-        readOnly
+        onChange={(event) => {
+          setContent(event.target.value);
+        }}
         style={{
           position: "relative",
           width: "100%",

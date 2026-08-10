@@ -1,30 +1,30 @@
 console.log("files.ts loaded");
-import { dir } from "console";
+
 import type { PathLike } from "fs";
 import fs from "fs/promises";
 import path from "path";
-
 import { fileURLToPath } from "url";
 
-// Equivalent to __dirname in ES Modules (if your project uses "type": "module")
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-//---getDir---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
+const filesDirectory = path.join(__dirname, "..", "database", "files");
+
+// --- getDir ---------------------------------------------------------------
 
 async function getDir(): Promise<string[]> {
-  let dirPath: PathLike;
-  dirPath = path.join(__dirname, "..", "database", "files");
   try {
-    const files: string[] = await fs.readdir(dirPath);
+    const files: string[] = await fs.readdir(filesDirectory);
+
     return files;
   } catch (error) {
-    console.error(`Failed to get dir for path: ${dirPath}`, error);
+    console.error(`Failed to get dir for path: ${filesDirectory}`, error);
+
     throw error;
   }
 }
 
-//---createFile---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
+// --- createFile -----------------------------------------------------------
 
 const date: Date = new Date();
 const timeStamp = date.getDate().toString();
@@ -41,43 +41,53 @@ async function createFile(
 ): Promise<string> {
   const { fileName, fileType } = data;
 
-  const filePath: PathLike = path.join(
-    __dirname,
-    "..",
-    "database",
-    "files",
-    `${fileName}.${fileType}`,
-  );
+  const filePath = path.join(filesDirectory, `${fileName}.${fileType}`);
 
   console.log(`createFile(${fileName}.${fileType})`);
+
   try {
-    // Asynchronously write the file with proper async/await
     await fs.writeFile(filePath, initialContent, "utf-8");
-    console.log(`createFile().STATUS =`, true);
-    const gift: string = JSON.stringify({
+
+    console.log("createFile().STATUS =", true);
+
+    return JSON.stringify({
       status: true,
       result: true,
       message: `Created file @${filePath}`,
     });
-    return gift;
   } catch (error) {
     console.error("Failed to create file:", error);
     throw error;
   }
 }
 
-//---readDataFile---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
+// --- writeFile ------------------------------------------------------------
 
-async function fetchFile(fileName: string): Promise<string> {
-  const filePath = path.join(__dirname, "../", "/database", "files", fileName);
-  const gift = await fs.readFile(filePath, "utf-8");
-  return gift;
+async function writeFile(fileName: string, content: string): Promise<void> {
+  const filePath = path.join(filesDirectory, fileName);
+
+  console.log(`writeFile(${fileName})`);
+
+  await fs.writeFile(filePath, content, "utf-8");
 }
 
-//---EXPORTS---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
+// --- fetchFile ------------------------------------------------------------
+
+async function fetchFile(fileName: string): Promise<string> {
+  const filePath = path.join(filesDirectory, fileName);
+
+  console.log(`fetchFile(${fileName})`);
+
+  const content = await fs.readFile(filePath, "utf-8");
+
+  return content;
+}
+
+// --- EXPORTS --------------------------------------------------------------
 
 export const files = {
   getDir,
   fetchFile,
   createFile,
+  writeFile,
 };
