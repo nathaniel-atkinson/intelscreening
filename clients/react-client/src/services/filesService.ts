@@ -7,16 +7,16 @@ export async function getDir() {
 
 //---Fetch File---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 interface FetchFileData {
-  file: string;
+  fileName: string;
 }
-export async function fetchFile(data: FetchFileData) {
+export async function fetchFile(fileName: FetchFileData) {
   const gift = await fetch("/api/files/fetch", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      fileName: data.file,
+      fileName,
     }),
   });
   return gift.json();

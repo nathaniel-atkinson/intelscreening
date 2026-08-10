@@ -10,6 +10,7 @@
     "client-react": "npm --prefix ./clients/react-client run dev",
     "lint": "npm --prefix ./server run lint",
     "lint:fix": "npm --prefix ./server run lint:fix",
-    "kill:react": "kill-port 5173 3525"
+    "kill:react": "kill-port 5173 3525",
+    "watch:git": "powershell -ExecutionPolicy Bypass -File ./watch-git.ps1"
   }
 }

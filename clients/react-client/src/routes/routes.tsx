@@ -10,7 +10,7 @@ const pageList = Object.entries(pages).map(([path, module]) => {
 
   return {
     name,
-    path: name === "home" ? "/" : `/${name}`,
+    path: name === "home" ? "" : name,
     Component,
   };
 });
@@ -47,7 +47,11 @@ function AppRoutes() {
   return (
     <Routes>
       {pageList.map(({ name, path, Component }) => (
-        <Route key={name} path={`/${path}/*`} element={<Component />} />
+        <Route
+          key={name}
+          path={path === "" ? "/" : `/${path}/*`}
+          element={<Component />}
+        />
       ))}
     </Routes>
   );

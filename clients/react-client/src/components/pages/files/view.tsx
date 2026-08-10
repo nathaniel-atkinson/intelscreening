@@ -1,90 +1,45 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { fetchFile } from "../../../services/filesService.js";
 
-export default function View() {
+function View() {
   const { fileName } = useParams<{ fileName: string }>();
 
   const [content, setContent] = useState("");
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!fileName) return;
+    if (!fileName) {
+      return;
+    }
 
-    const name = fileName;
+    const name: string = fileName;
 
-    async function loadFile() {
+    async function loadData() {
       try {
-        const response = await fetch(
-          `/api/files/view/${encodeURIComponent(name)}`,
-        );
+        const textContent = await fetchFile({
+          fileName: name,
+        });
 
-        if (!response.ok) {
-          throw new Error(`Failed to load ${name}`);
-        }
-
-        const text = await response.text();
-        setContent(text);
+        console.log(textContent);
+        setContent(textContent);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
+        console.error(err);
       }
     }
 
-    loadFile();
+    loadData();
   }, [fileName]);
 
-  async function saveFile() {
-    if (!fileName) return;
-
-    try {
-      const response = await fetch(
-        `/api/files/view/${encodeURIComponent(fileName)}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "text/plain",
-          },
-          body: content,
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to save ${fileName}`);
-      }
-
-      console.log(`Saved ${fileName}`);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save file");
-    }
-  }
-
-  if (error) {
-    return <div>{error}</div>;
+  if (!fileName) {
+    return <div>No file specified.</div>;
   }
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <h1>{fileName}</h1>
-
-      <button onClick={saveFile}>Save</button>
-
-      <textarea
-        value={content}
-        onChange={(event) => {
-          setContent(event.target.value);
-        }}
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "calc(100% - 50px)",
-          boxSizing: "border-box",
-          resize: "none",
-        }}
-      />
-    </div>
+    <textarea
+      value={content}
+      onChange={(event) => setContent(event.target.value)}
+    />
   );
 }
+
+export default View;
