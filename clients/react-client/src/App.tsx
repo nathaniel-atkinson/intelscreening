@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 function App() {
   return (
     <BrowserRouter>
-      <MainLayout showRightAside={false} showHeader={false} />
+      <MainLayout showHeader={false} />
     </BrowserRouter>
   );
 }

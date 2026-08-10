@@ -15,9 +15,7 @@ export async function fetchFile(fileName: FetchFileData) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      fileName,
-    }),
+    body: JSON.stringify(fileName),
   });
   return gift.json();
 }
@@ -40,4 +38,27 @@ export async function createFile(data: CreateFileData) {
     }),
   });
   return gift.json();
+}
+
+//---Write File---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+interface WriteFileData {
+  fileName: string;
+  data: string;
+}
+
+export async function writeFile(data: WriteFileData) {
+  const response = await fetch(
+    `/api/files/view/${encodeURIComponent(data.fileName)}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data: data.data,
+      }),
+    },
+  );
+
+  return response.json();
 }

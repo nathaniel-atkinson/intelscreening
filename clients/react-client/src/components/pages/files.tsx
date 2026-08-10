@@ -5,8 +5,8 @@ import View from "./files/view.js";
 function Files() {
   return (
     <Routes>
-      <Route path="/" element={<Directory />}></Route>
-      <Route path="/view/:file" element={<View />}></Route>
+      <Route path="*" element={<Directory />}></Route>
+      <Route path="view/:fileName" element={<View />}></Route>
     </Routes>
   );
 }
