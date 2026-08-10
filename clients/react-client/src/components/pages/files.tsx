@@ -20,7 +20,11 @@ function Files() {
 
   function PageRoutesLinks() {
     return pageList.map((page) => {
-      return <Link to={`/files/view/${encodeURIComponent(page)}`}>{page}</Link>;
+      return (
+        <Link key={page} to={`/files/view/${encodeURIComponent(page)}`}>
+          {page}
+        </Link>
+      );
     });
   }
 

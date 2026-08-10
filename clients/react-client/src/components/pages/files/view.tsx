@@ -35,9 +35,25 @@ export default function View() {
   }
 
   return (
-    <main>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
+    >
       <h1>{fileName}</h1>
-      <pre>{content}</pre>
-    </main>
+
+      <textarea
+        value={content}
+        readOnly
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "calc(100% - 50px)",
+          boxSizing: "border-box",
+          resize: "none",
+        }}
+      />
+    </div>
   );
 }
