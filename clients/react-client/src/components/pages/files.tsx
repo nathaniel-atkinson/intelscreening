@@ -1,6 +1,7 @@
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import ProjectTree from "../projects/projectTree.js";
 import { nestedFilePages } from "./pages.js";
+import View from "./files/view.js";
 
 function Files() {
   const pageList: string[] = ["Directory", "View", "Bin"];
@@ -19,11 +20,7 @@ function Files() {
 
   function PageRoutesLinks() {
     return pageList.map((page) => {
-      return (
-        <NavLink to={`/files/${page}`} key={page}>
-          {page}
-        </NavLink>
-      );
+      return <Link to={`/files/view/${encodeURIComponent(page)}`}>{page}</Link>;
     });
   }
 
@@ -48,7 +45,10 @@ function Files() {
         <PageRoutesLinks />
       </div>
 
-      <Routes>{PageRoutes()}</Routes>
+      <Routes>
+        {PageRoutes()}
+        <Route path="view/:fileName" element={<View />} />
+      </Routes>
     </>
   );
 }

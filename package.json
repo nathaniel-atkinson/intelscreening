@@ -4,9 +4,12 @@
     "kill-port": "^2.0.1"
   },
   "scripts": {
+    "zip": "powershell -NoProfile -Command \"Compress-Archive -Path * -DestinationPath ../intelScreening.zip -Force\"",
     "dev:react": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client-react\"",
-    "server": "npm --prefix server run dev",
-    "client-react": "npm --prefix clients/react-client run dev",
+    "server": "npm --prefix ./server run dev",
+    "client-react": "npm --prefix ./clients/react-client run dev",
+    "lint": "npm --prefix ./server run lint",
+    "lint:fix": "npm --prefix ./server run lint:fix",
     "kill:react": "kill-port 5173 3525"
   }
 }

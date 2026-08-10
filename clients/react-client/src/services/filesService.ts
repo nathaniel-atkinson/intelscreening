@@ -6,10 +6,10 @@ export async function getDir() {
 }
 
 //---Fetch File---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-interface fetchFileData {
+interface FetchFileData {
   file: string;
 }
-export async function fetchFile(data: fetchFileData) {
+export async function fetchFile(data: FetchFileData) {
   const gift = await fetch("/api/files/fetch", {
     method: "POST",
     headers: {

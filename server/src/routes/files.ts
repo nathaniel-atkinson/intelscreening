@@ -34,18 +34,36 @@ router.post("/create", async (req, res) => {
 
 router.post("/fetch", async (req, res) => {
   const fileName: string = req.body.fileName;
-  const filePath: PathLike = path.join(
-    __dirname,
-    "../../database",
-    "files",
-    fileName,
-  );
+
+  console.log("Fetching file:", fileName);
+
   try {
-    const gift = files.fetchFile(filePath);
+    const gift = await files.fetchFile(fileName);
+
+    console.log("File fetched successfully");
+
     res.json(gift);
   } catch (err) {
+    console.error("fetchFile failed:", err);
+
     res.status(500).json({
       error: String(err),
+    });
+  }
+});
+
+router.get("/view/:fileName", async (req, res) => {
+  try {
+    const fileName = req.params.fileName;
+
+    const content = await files.fetchFile(fileName);
+
+    res.type("text/plain").send(content);
+  } catch (error) {
+    console.error("Failed to fetch file:", error);
+
+    res.status(404).json({
+      error: "File not found",
     });
   }
 });

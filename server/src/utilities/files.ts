@@ -69,7 +69,7 @@ async function createFile(
 //---readDataFile---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 
 async function fetchFile(fileName: string): Promise<string> {
-  const filePath = path.join(__dirname, "../../database", "files", fileName);
+  const filePath = path.join(__dirname, "../", "/database", "files", fileName);
   const gift = await fs.readFile(filePath, "utf-8");
   return gift;
 }
