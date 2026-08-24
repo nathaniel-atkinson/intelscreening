@@ -5,7 +5,7 @@
 
     /* Language */
     "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "ESNext.Temporal"],
 
     /* Modules */
     "module": "ESNext",

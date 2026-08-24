@@ -1,3 +1,7 @@
+@use "./styles/mixins";
+@use "./styles/variables";
+@use "./styles/ui";
+
 * {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -5,7 +9,30 @@
   user-select: none;
   font-family: "Courier New", Courier, monospace;
 
-  transition-duration: 0.2s;
+  transition: 0.2s;
+}
+
+.body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 1px;
+
+  display: grid;
+
+  nav {
+    @include mixins.nav;
+    @include mixins.panels;
+  }
+
+  .sandbox {
+    @include mixins.sandbox;
+    > * {
+      @include mixins.panels;
+    }
+  }
 }
 
 .selectable {
@@ -22,30 +49,4 @@
       content: " <";
     }
   }
-}
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.modal {
-  position: relative;
-
-  width: 400px;
-  max-width: calc(100vw - 40px);
-  padding: 24px;
-
-  background: white;
-  border: 1px solid black;
-  border-radius: 8px;
-
-  box-sizing: border-box;
 }
