@@ -2,6 +2,8 @@ import Button from "./asides/button_1.js";
 import { useEffect, useRef, useState } from "react";
 import Cookies from "../../utilities/cookies.js";
 
+const cookies = Cookies();
+
 function App() {
   const ref = useRef<HTMLElement>(null);
   const [top, setTop] = useState(0);
@@ -14,14 +16,18 @@ function App() {
   }, []);
 
   function handleClick() {
-    const newState = Cookies.toggle("leftAsideState");
+    const newState = cookies.toggle("leftAside");
   }
 
   return (
-    <aside ref={ref} className="left" onClick={() => handleClick()}>
-      <Button buttonTop={top} side={"left"} />
-      <p>leftAside</p>
-    </aside>
+    <>
+      <aside ref={ref} className="left" onClick={() => handleClick()}>
+        <Button buttonTop={top} side={"left"} />
+        <div className="content">
+          <p>leftAside</p>
+        </div>
+      </aside>
+    </>
   );
 }
 

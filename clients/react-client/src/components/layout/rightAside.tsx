@@ -1,5 +1,8 @@
 import Button from "./asides/button_1.js";
 import { useEffect, useRef, useState } from "react";
+import Cookies from "../../utilities/cookies.js";
+
+const cookies = Cookies();
 
 function App() {
   const ref = useRef<HTMLElement>(null);
@@ -12,11 +15,19 @@ function App() {
     setTop(top);
   }, []);
 
+  function handleClick() {
+    const newState = cookies.toggle("rightAside");
+  }
+
   return (
-    <aside ref={ref} className="right">
-      <Button buttonTop={top} side={"right"} />
-      <p>rightAside</p>
-    </aside>
+    <>
+      <aside ref={ref} className="left" onClick={() => handleClick()}>
+        <Button buttonTop={top} side={"right"} />
+        <div className="content">
+          <p>rightAside</p>
+        </div>
+      </aside>
+    </>
   );
 }
 
