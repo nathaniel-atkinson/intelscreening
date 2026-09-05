@@ -1,33 +1,34 @@
 import Button from "./asides/button_1.js";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "../../utilities/cookies.js";
 
 const cookies = Cookies();
 
-function App() {
-  const ref = useRef<HTMLElement>(null);
-  const [top, setTop] = useState(0);
+interface AppProps {
+  show?: boolean;
+}
+
+function App({ show = true }: AppProps) {
+  const [state, setState] = useState(cookies.get("rightAside") ?? true);
 
   useEffect(() => {
-    if (!ref.current) return;
-
-    const top = ref.current.getBoundingClientRect().top;
-    setTop(top);
+    return cookies.subscribe("rightAside", setState);
   }, []);
 
   function handleClick() {
-    const newState = cookies.toggle("rightAside");
+    cookies.toggle("rightAside");
   }
 
   return (
-    <>
-      <aside ref={ref} className="left" onClick={() => handleClick()}>
-        <Button buttonTop={top} side={"right"} />
+    <aside className="right">
+      <Button side="right" state={state} onClick={handleClick} />
+
+      {show && (
         <div className="content">
           <p>rightAside</p>
         </div>
-      </aside>
-    </>
+      )}
+    </aside>
   );
 }
 

@@ -1,29 +1,19 @@
-import { createPortal } from "react-dom";
-
 interface AppProps {
-  buttonTop: number;
-  side: string;
+  side?: "left" | "right";
+  onClick?: () => void;
+  state: boolean;
 }
 
-function App({ buttonTop, side }: AppProps) {
-  function getSide() {
-    if (side === "left") return { left: 0 };
-    if (side === "right") return { right: 0 };
-
-    return {};
-  }
-
-  return createPortal(
+function App(gift: AppProps) {
+  return (
     <span
+      onClick={gift.onClick}
       style={{
-        position: "absolute",
-        top: `${buttonTop}px`,
-        ...getSide(),
+        float: gift.side === "left" ? "left" : "right",
       }}
     >
-      [<span>+</span>]
-    </span>,
-    document.body,
+      [<span>{gift.state ? "-" : "+"}</span>]
+    </span>
   );
 }
 

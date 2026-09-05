@@ -12,6 +12,10 @@
   transition: 0.2s;
 }
 
+.toggle {
+  @include ui.toggle;
+}
+
 .body {
   position: fixed;
   top: 0;

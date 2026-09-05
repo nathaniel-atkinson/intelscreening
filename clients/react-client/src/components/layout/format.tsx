@@ -6,32 +6,31 @@ import RightAside from "./rightAside.js";
 import Footer from "./footer.js";
 
 interface FormatProps {
-  leftAside?: boolean;
-  rightAside?: boolean;
-  header?: boolean;
-  footer?: boolean;
+  leftAside: boolean;
+  rightAside: boolean;
+  header: boolean;
+  footer: boolean;
 }
 
-function App({
-  leftAside = true,
-  rightAside = true,
-  header = true,
-  footer = true,
-}: FormatProps) {
-  function adjustFor(show: boolean, type: string) {
-    if (type === "aside") return show ? "200px" : "";
-  }
+function App({ leftAside, rightAside, header, footer }: FormatProps) {
+  const rows = [
+    ...(header ? ["50px"] : []),
+    "50px",
+    "1fr",
+    ...(footer ? ["50px"] : []),
+  ];
+
+  const columns = [
+    ...(leftAside ? ["200px"] : ["50px"]),
+    "1fr",
+    ...(rightAside ? ["200px"] : ["50px"]),
+  ];
 
   return (
     <div
       className="body"
       style={{
-        gridTemplateRows: `
-          ${header ? "50px" : ""}
-          50px
-          1fr
-          ${footer ? "50px" : ""}
-        `,
+        gridTemplateRows: rows.join(" "),
       }}
     >
       {header && <Header />}
@@ -41,18 +40,14 @@ function App({
       <div
         className="sandbox"
         style={{
-          gridTemplateColumns: `
-            ${adjustFor(leftAside, "aside")}
-            1fr
-            ${adjustFor(rightAside, "aside")}
-          `,
+          gridTemplateColumns: columns.join(" "),
         }}
       >
-        {leftAside && <LeftAside />}
+        <LeftAside show={leftAside} />
 
-        <Main />
+        <Main format={{ header, leftAside, rightAside, footer }} />
 
-        {rightAside && <RightAside />}
+        <RightAside show={rightAside} />
       </div>
 
       {footer && <Footer />}

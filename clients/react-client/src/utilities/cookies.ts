@@ -1,6 +1,6 @@
 const booleanCookies = ["footer", "header", "leftAside", "rightAside"] as const;
 
-type BooleanCookie = (typeof booleanCookies)[number];
+export type BooleanCookie = (typeof booleanCookies)[number];
 
 class CookiesManager {
   private listeners = new Map<BooleanCookie, Set<(value: boolean) => void>>();
@@ -30,8 +30,13 @@ class CookiesManager {
 
     const value = decodeURIComponent(cookie.substring(name.length + 1));
 
-    if (value === "true") return true;
-    if (value === "false") return false;
+    if (value === "true") {
+      return true;
+    }
+
+    if (value === "false") {
+      return false;
+    }
 
     return null;
   }
@@ -65,8 +70,8 @@ class CookiesManager {
   }
 }
 
+const cookiesManager = new CookiesManager();
+
 export default function Cookies() {
-  const manager = new CookiesManager();
-  manager.init();
-  return manager;
+  return cookiesManager;
 }

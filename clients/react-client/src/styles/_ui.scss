@@ -2,3 +2,19 @@
   display: flex;
   justify-content: center;
 }
+
+@mixin toggle {
+  $eye: 15px;
+  height: fit-content;
+  width: $eye * 2;
+  border-radius: 50px;
+  background-color: grey;
+  padding: 2px;
+
+  & .eye {
+    width: $eye;
+    height: $eye;
+    background-color: white;
+    border-radius: 50%;
+  }
+}
