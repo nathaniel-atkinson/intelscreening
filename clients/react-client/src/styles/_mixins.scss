@@ -1,13 +1,11 @@
 @use "./variables";
+@use "./pages";
 
 @mixin panels {
   position: relative;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
 }
 
 @mixin nav {
@@ -15,7 +13,6 @@
   grid-template-columns: 200px 1fr;
   align-items: center;
   justify-content: center;
-  border-bottom: 3px solid black;
 }
 
 @mixin sandbox {
@@ -29,10 +26,16 @@
   aside.left {
     grid-area: leftAside;
   }
-  main {
+  > main {
     grid-area: main;
     border-left: 1px dashed black;
     border-right: 1px dashed black;
+
+    .page {
+      .games {
+        @include pages.games;
+      }
+    }
   }
   aside.right {
     grid-area: rightAside;

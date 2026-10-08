@@ -18,3 +18,22 @@
     border-radius: 50%;
   }
 }
+
+//GAMES
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+
+  width: fit-content;
+  height: fit-content;
+  gap: 4px;
+}
+
+.tile {
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+  border-radius: 10px;
+}

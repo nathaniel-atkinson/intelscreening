@@ -1,7 +1,24 @@
-function App() {
+interface AppProps {
+  show?: boolean;
+}
+
+function App({ show }: AppProps) {
   return (
-    <header>
-      <p>Header</p>
+    <header
+      style={{
+        display: "flex",
+        justifyContent: "start",
+        alignContent: "center",
+        paddingLeft: "10px",
+      }}
+    >
+      <div
+        style={{
+          display: show ? "block" : "none",
+        }}
+      >
+        <p>Header</p>
+      </div>
     </header>
   );
 }

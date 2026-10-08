@@ -1,0 +1,5 @@
+@use "./format";
+
+@mixin games {
+  @include format.simplePage;
+}

@@ -15,6 +15,7 @@ function App() {
         }}
       >
         <NavLink to="/">Home</NavLink>
+        <NavLink to="/games">Games</NavLink>
         <NavLink to="/settings">Settings</NavLink>
       </div>
     </nav>

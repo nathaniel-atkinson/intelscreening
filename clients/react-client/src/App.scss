@@ -1,6 +1,8 @@
 @use "./styles/mixins";
 @use "./styles/variables";
 @use "./styles/ui";
+@use "./styles/pages";
+@use "./styles/format";
 
 * {
   -webkit-user-select: none;
@@ -17,40 +19,27 @@
 }
 
 .body {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  @include format.fullScreen;
   margin: 1px;
 
   display: grid;
 
-  nav {
+  > nav {
     @include mixins.nav;
-    @include mixins.panels;
+    border-bottom: 3px solid black;
   }
 
   .sandbox {
     @include mixins.sandbox;
+
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+
     > * {
       @include mixins.panels;
-    }
-  }
-}
-
-.selectable {
-  &:hover {
-    &.underline {
-      text-decoration: underline;
-    }
-    font-weight: 700;
-    background-color: rgba(255, 255, 0, 0.5);
-    &::before {
-      content: "> ";
-    }
-    &::after {
-      content: " <";
+      min-width: 0;
+      min-height: 0;
     }
   }
 }

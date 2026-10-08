@@ -6,25 +6,34 @@ import RightAside from "./rightAside.js";
 import Footer from "./footer.js";
 
 interface FormatProps {
+  cookiepermanence: boolean;
   leftAside: boolean;
   rightAside: boolean;
+  asides: boolean;
   header: boolean;
   footer: boolean;
 }
 
-function App({ leftAside, rightAside, header, footer }: FormatProps) {
+function App({
+  cookiepermanence,
+  leftAside,
+  rightAside,
+  asides,
+  header,
+  footer,
+}: FormatProps) {
   const rows = [
-    ...(header ? ["50px"] : []),
+    header ? "50px" : "0px",
     "50px",
     "1fr",
-    ...(footer ? ["50px"] : []),
+    footer ? "50px" : "0px",
   ];
 
-  const columns = [
-    ...(leftAside ? ["200px"] : ["50px"]),
-    "1fr",
-    ...(rightAside ? ["200px"] : ["50px"]),
-  ];
+  const columns = asides
+    ? [leftAside ? "200px" : "50px", "1fr", rightAside ? "200px" : "50px"]
+    : ["1fr"];
+
+  const columnAreas = asides ? ["leftAside", "main", "rightAside"] : ["main"];
 
   return (
     <div
@@ -33,7 +42,7 @@ function App({ leftAside, rightAside, header, footer }: FormatProps) {
         gridTemplateRows: rows.join(" "),
       }}
     >
-      {header && <Header />}
+      <Header show={header} />
 
       <Nav />
 
@@ -41,16 +50,26 @@ function App({ leftAside, rightAside, header, footer }: FormatProps) {
         className="sandbox"
         style={{
           gridTemplateColumns: columns.join(" "),
+          gridTemplateAreas: `"${columnAreas.join(" ")}"`,
         }}
       >
-        <LeftAside show={leftAside} />
+        {asides && <LeftAside show={leftAside} />}
 
-        <Main format={{ header, leftAside, rightAside, footer }} />
+        <Main
+          format={{
+            cookiepermanence,
+            header,
+            leftAside,
+            asides,
+            rightAside,
+            footer,
+          }}
+        />
 
-        <RightAside show={rightAside} />
+        {asides && <RightAside show={rightAside} />}
       </div>
 
-      {footer && <Footer />}
+      <Footer show={footer} />
     </div>
   );
 }

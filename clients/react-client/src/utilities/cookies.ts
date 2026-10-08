@@ -1,4 +1,11 @@
-const booleanCookies = ["footer", "header", "leftAside", "rightAside"] as const;
+const booleanCookies = [
+  "cookiepermanence",
+  "footer",
+  "header",
+  "asides",
+  "leftAside",
+  "rightAside",
+] as const;
 
 export type BooleanCookie = (typeof booleanCookies)[number];
 
@@ -42,7 +49,10 @@ class CookiesManager {
   }
 
   set(name: BooleanCookie, value: boolean) {
-    document.cookie = `${name}=${value}; path=/`;
+    const persistent = this.get("cookiepermanence") ?? true;
+
+    document.cookie =
+      `${name}=${value}; path=/` + (persistent ? "; max-age=31536000" : "");
 
     this.listeners.get(name)?.forEach((listener) => {
       listener(value);
