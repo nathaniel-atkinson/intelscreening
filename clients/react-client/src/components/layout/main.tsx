@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/home.js";
 import Settings from "../pages/settings.js";
-import Games from "../pages/games/games.js";
+import Games from "../pages/games/gamescripts.js";
 
 interface AppProps {
   format: {

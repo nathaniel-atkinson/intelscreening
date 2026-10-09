@@ -26,6 +26,8 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
 
+  justify-content: center;
+
   width: fit-content;
   height: fit-content;
   gap: 4px;
@@ -36,4 +38,21 @@
   width: 100px;
   border: 1px solid black;
   border-radius: 10px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  &.selected {
+    background-color: lightgreen;
+  }
+
+  &.adjacent {
+    background-color: yellow !important;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }

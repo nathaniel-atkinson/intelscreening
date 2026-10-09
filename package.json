@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "concurrently": "^10.0.5",
     "kill-port": "^2.0.1"
   },
@@ -12,5 +13,8 @@
     "lint:fix": "npm --prefix ./server run lint:fix",
     "kill:react": "kill-port 5173 3525",
     "watch:git": "powershell -ExecutionPolicy Bypass -File ./watch-git.ps1"
+  },
+  "dependencies": {
+    "cors": "^2.8.6"
   }
 }

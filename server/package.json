@@ -23,9 +23,11 @@
     "format": "prettier . --write"
   },
   "dependencies": {
+    "dictionary-en": "^4.0.0",
     "express": "^5.2.1",
     "livereload": "^0.10.3",
-    "mysql2": "^3.23.2"
+    "mysql2": "^3.23.2",
+    "nspell": "^2.1.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

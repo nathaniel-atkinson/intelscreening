@@ -1,4 +1,6 @@
-import express from "express";
+import cors from "cors";
+
+app.use(cors({ origin: "http://localhost:5173" }));
 
 import app from "./app.js";
 const PORT = process.env.PORT || 3000;
