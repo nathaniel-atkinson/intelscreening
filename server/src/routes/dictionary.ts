@@ -1,10 +1,14 @@
 import { Router } from "express";
 import en from "dictionary-en";
 import nspell from "nspell";
+import { Buffer } from "node:buffer";
+
+const spell = nspell({
+  aff: Buffer.from(en.aff),
+  dic: Buffer.from(en.dic),
+});
 
 const router = Router();
-
-const spell = nspell(en);
 
 router.get("/word/:word", (req, res) => {
   const word = req.params.word?.trim().toLowerCase();

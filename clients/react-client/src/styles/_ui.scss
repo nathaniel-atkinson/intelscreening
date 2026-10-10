@@ -56,3 +56,14 @@
     background-color: rgba(0, 0, 0, 0.2);
   }
 }
+
+.word-list {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  ul {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+}
