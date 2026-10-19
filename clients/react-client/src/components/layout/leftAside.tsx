@@ -1,33 +1,18 @@
 import Button from "./asides/button_1.js";
-import { useEffect, useState } from "react";
-import Cookies from "../../utilities/cookies.js";
-
-const cookies = Cookies();
+import useCookie from "../../utilities/useCookie.js";
 
 interface AppProps {
   show?: boolean;
 }
 
 function App({ show = true }: AppProps) {
-  const [state, setState] = useState(cookies.get("leftAside") ?? true);
-
-  useEffect(() => {
-    return cookies.subscribe("leftAside", setState);
-  }, []);
-
-  function handleClick() {
-    cookies.toggle("leftAside");
-  }
+  const leftAside = useCookie("leftAside", true);
 
   return (
     <aside className="left">
-      <Button side="left" state={state} onClick={handleClick} />
+      <Button side="left" state={leftAside.value} onClick={leftAside.toggle} />
 
-      {show && (
-        <div className="content">
-          <p>leftAside</p>
-        </div>
-      )}
+      <div className="content" id="left-aside-portal" hidden={!show} />
     </aside>
   );
 }

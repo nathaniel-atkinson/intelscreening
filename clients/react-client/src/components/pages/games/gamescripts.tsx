@@ -1,5 +1,5 @@
 import { Link, Routes, Route } from "react-router-dom";
-import Boggle from "./boggle/boggle.js";
+import Boggle from "./boggle/boggle.app.js";
 
 function Games() {
   return (

@@ -19,7 +19,7 @@ function App({ format }: AppProps) {
     <main>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/settings/*" element={<Settings format={format} />} />
+        <Route path="/settings/*" element={<Settings />} />
         <Route path="/games/*" element={<Games />} />
       </Routes>
     </main>

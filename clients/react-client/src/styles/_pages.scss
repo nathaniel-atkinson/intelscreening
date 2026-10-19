@@ -1,4 +1,5 @@
 @use "./format";
+@use "./pages/boggle";
 
 @mixin games {
   @include format.simplePage;

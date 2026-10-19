@@ -1,7 +1,5 @@
-import Cookies from "../../utilities/cookies.js";
+import useCookie from "../../utilities/useCookie.js";
 import Toggle from "../interactives/toggles.js";
-
-const cookies = Cookies();
 
 const cookieNames = [
   "cookiepermanence",
@@ -12,18 +10,30 @@ const cookieNames = [
   "rightAside",
 ] as const;
 
-interface SettingsProps {
-  format: {
-    cookiepermanence: boolean;
-    header: boolean;
-    leftAside: boolean;
-    asides: boolean;
-    rightAside: boolean;
-    footer: boolean;
-  };
+type CookieName = (typeof cookieNames)[number];
+
+function CookieSetting({ name }: { name: CookieName }) {
+  const cookie = useCookie(name, true);
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: "5px",
+      }}
+    >
+      <Toggle value={cookie.value} onClick={cookie.toggle} />
+
+      <div>
+        {name}={String(cookie.value)}
+      </div>
+    </div>
+  );
 }
 
-function Settings({ format }: SettingsProps) {
+function Settings() {
+  const footer = useCookie("footer", true);
+
   return (
     <div
       style={{
@@ -31,35 +41,16 @@ function Settings({ format }: SettingsProps) {
         top: "100px",
         left: "200px",
         right: "200px",
-        bottom: format.footer ? "10px" : "50px",
+        bottom: footer.value ? "10px" : "50px",
         padding: "10px",
       }}
     >
       <p>Settings</p>
 
       <form>
-        {cookieNames.map((cookieName) => {
-          const value = format[cookieName];
-
-          return (
-            <div
-              key={cookieName}
-              style={{
-                display: "flex",
-                gap: "5px",
-              }}
-            >
-              <Toggle
-                value={value}
-                onClick={() => cookies.toggle(cookieName)}
-              />
-
-              <div>
-                {cookieName}={String(value)}
-              </div>
-            </div>
-          );
-        })}
+        {cookieNames.map((name) => (
+          <CookieSetting key={name} name={name} />
+        ))}
       </form>
     </div>
   );

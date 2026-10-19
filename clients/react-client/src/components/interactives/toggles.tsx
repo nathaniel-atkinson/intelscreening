@@ -5,7 +5,8 @@ interface ToggleProps {
 
 function Toggle({ value, onClick }: ToggleProps) {
   return (
-    <div
+    <button
+      type="button"
       className="toggle"
       onClick={onClick}
       role="switch"
@@ -17,7 +18,7 @@ function Toggle({ value, onClick }: ToggleProps) {
           float: value ? "right" : "left",
         }}
       />
-    </div>
+    </button>
   );
 }
 
